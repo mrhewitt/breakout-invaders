@@ -1,0 +1,13 @@
+[gd_scene load_steps=5 format=3 uid="uid://u17vyaob2nnc"]
+
+[ext_resource type="PackedScene" uid="uid://d2k83ytsur2j0" path="res://ui/buttons/toggle_screen_button.tscn" id="1_wy1rl"]
+[ext_resource type="StyleBox" uid="uid://dwdo3ltbi61q1" path="res://resource/sfx_on_button.tres" id="2_wy1rl"]
+[ext_resource type="StyleBox" uid="uid://c3i4lxobu1njw" path="res://resource/sfx_off_button.tres" id="3_6ob0b"]
+[ext_resource type="Script" uid="uid://cgch7jtny448l" path="res://ui/buttons/audio_bus_button.gd" id="3_wy1rl"]
+
+[node name="AudioBusButton" instance=ExtResource("1_wy1rl")]
+custom_minimum_size = Vector2(32, 32)
+script = ExtResource("3_wy1rl")
+style_box_on = ExtResource("2_wy1rl")
+style_box_off = ExtResource("3_6ob0b")
+audio_bus_name = ""

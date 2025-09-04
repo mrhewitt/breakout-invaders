@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5vxwsx2dlxkp"]
+
+[ext_resource type="Script" uid="uid://d31nj0tcgi4ew" path="res://entities/shield/shield.gd" id="1_u66so"]
+
+[node name="Shield" type="Node2D"]
+script = ExtResource("1_u66so")
+
+[node name="SpriteLeft" type="Sprite2D" parent="."]
+
+[node name="ShieldLeft" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShieldLeft"]
+
+[node name="ShieldRight" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShieldRight"]

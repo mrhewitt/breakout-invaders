@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bo6vnvb5yiey4"]
+
+[ext_resource type="FontFile" uid="uid://bryhi0ncxxbjq" path="res://assets/font/Pixel.ttf" id="1_bkbxn"]
+
+[resource]
+font = ExtResource("1_bkbxn")
+font_size = 20
+font_color = Color(0.956863, 1, 0.74902, 1)
+shadow_size = 3
+shadow_color = Color(0.603922, 0.85098, 0.254902, 1)

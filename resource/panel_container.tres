@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://bbsgcg345owu"]
+
+[ext_resource type="Texture2D" uid="uid://dtesw18m73i1r" path="res://assets/ui/SpaceInvaders_Borders.png" id="1_5w4ar"]
+
+[resource]
+texture = ExtResource("1_5w4ar")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0

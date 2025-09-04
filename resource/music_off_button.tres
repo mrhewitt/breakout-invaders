@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=3 format=3 uid="uid://bsyvpxotsgpof"]
+
+[ext_resource type="Texture2D" uid="uid://bcenfw7pbi3ks" path="res://assets/ui/buttons/SpaceInvaders_Icons.png" id="1_jssg5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ym51b"]
+atlas = ExtResource("1_jssg5")
+region = Rect2(192, 0, 32, 32)
+
+[resource]
+texture = SubResource("AtlasTexture_ym51b")

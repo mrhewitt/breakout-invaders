@@ -1,0 +1,29 @@
+extends MarginContainer
+
+signal game_started
+
+@onready var top_player_score: Label = %TopPlayerScore
+
+
+func _ready() -> void:
+	top_player_score.text = "Loading scores..."
+	GameManager.top_player_updated.connect(show_top_player)
+	
+
+func _on_play_button_pressed() -> void:
+	game_started.emit()
+	
+	# create a shrenk effect
+	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(self, "global_position", Vector2( global_position.x, get_viewport_rect().size.y + 50 ), 0.5)
+	tween.parallel().tween_property(self,"modulate:a",0,0.6)
+	
+	# wait till finished then hide panel and reset size for next display
+	await tween.finished
+	visible = false	
+	scale = Vector2.ONE
+	modulate.a = 1
+	
+	
+func show_top_player(top_player: Dictionary) -> void:
+	top_player_score.text = top_player.name + ": " + str(top_player.score)

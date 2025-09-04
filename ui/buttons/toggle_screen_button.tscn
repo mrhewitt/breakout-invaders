@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2k83ytsur2j0"]
+
+[ext_resource type="PackedScene" uid="uid://bnhatq1g8uroh" path="res://ui/buttons/screen_button.tscn" id="1_o8fa1"]
+[ext_resource type="Script" uid="uid://uvqfcsdxdjx0" path="res://ui/buttons/toggle_screen_button.gd" id="2_b0ai8"]
+
+[node name="ToggleScreenButton" instance=ExtResource("1_o8fa1")]
+script = ExtResource("2_b0ai8")
+style_box_on = null
+style_box_off = null
+is_on = true

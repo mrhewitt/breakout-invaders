@@ -1,0 +1,145 @@
+[gd_scene load_steps=16 format=3 uid="uid://gmlielrkjsvt"]
+
+[ext_resource type="Texture2D" uid="uid://fdrplw3a8h4l" path="res://assets/background/SpaceInvaders_Background.png" id="1_6xmxd"]
+[ext_resource type="Script" uid="uid://dhp0td1arxkwt" path="res://world/world.gd" id="1_fn3g3"]
+[ext_resource type="Theme" uid="uid://cuya3oesxofh2" path="res://resource/game_theme.tres" id="1_mad0u"]
+[ext_resource type="Texture2D" uid="uid://bsv6krg7nn1f6" path="res://assets/background/SpaceInvaders_BackgroundBuildings.png" id="2_mmdvd"]
+[ext_resource type="PackedScene" uid="uid://n2fd74tuta5f" path="res://entities/paddle/paddle.tscn" id="3_fn3g3"]
+[ext_resource type="PackedScene" uid="uid://gm21bw4cc6i6" path="res://world/invader_grid.tscn" id="5_ai45w"]
+[ext_resource type="PackedScene" uid="uid://rto7lxxjwb0i" path="res://ui/hud.tscn" id="6_4papg"]
+[ext_resource type="AudioStream" uid="uid://wxw4q245f8cg" path="res://assets/audio/Funky-Chiptune.mp3" id="10_fyhu2"]
+[ext_resource type="PackedScene" uid="uid://7caf5r6l7cj4" path="res://ui/top_players_container.tscn" id="11_mad0u"]
+[ext_resource type="PackedScene" uid="uid://c421k7ke8tl76" path="res://ui/game_menu_container.tscn" id="11_ov2xu"]
+[ext_resource type="PackedScene" uid="uid://c2xlanqdypmdo" path="res://ui/pause_container.tscn" id="13_ocfjn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ai45w"]
+size = Vector2(880, 192)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sc4t8"]
+size = Vector2(165, 1348)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4papg"]
+size = Vector2(154, 1325)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fyhu2"]
+size = Vector2(996, 180)
+
+[node name="World" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_mad0u")
+script = ExtResource("1_fn3g3")
+
+[node name="StarsBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_6xmxd")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="CityBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -478.0
+offset_bottom = -286.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_mmdvd")
+stretch_mode = 1
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 296)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -290.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0.0784314, 0.117647, 1)
+
+[node name="HUD" parent="." instance=ExtResource("6_4papg")]
+visible = false
+layout_mode = 1
+
+[node name="InvaderGrid" parent="." instance=ExtResource("5_ai45w")]
+
+[node name="Paddle" parent="." instance=ExtResource("3_fn3g3")]
+visible = false
+position = Vector2(391, 1107)
+
+[node name="InvaderMoveTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="UpperBoundArea" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBoundArea"]
+position = Vector2(382, 86)
+shape = SubResource("RectangleShape2D_ai45w")
+
+[node name="LeftBoundArea" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundArea"]
+position = Vector2(-66.5, 664)
+shape = SubResource("RectangleShape2D_sc4t8")
+
+[node name="RightBoundArea" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBoundArea"]
+position = Vector2(786, 652.5)
+shape = SubResource("RectangleShape2D_4papg")
+
+[node name="DeatchZoneArea" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeatchZoneArea"]
+position = Vector2(488, 1262)
+shape = SubResource("RectangleShape2D_fyhu2")
+
+[node name="PauseContainer" parent="." instance=ExtResource("13_ocfjn")]
+visible = false
+z_index = 9
+layout_mode = 1
+offset_top = -86.5
+offset_bottom = 86.5
+
+[node name="GameMenuContainer" parent="." instance=ExtResource("11_ov2xu")]
+layout_mode = 1
+offset_top = -277.0
+offset_bottom = 277.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_fyhu2")
+volume_db = -5.433
+autoplay = true
+bus = &"Music"
+
+[node name="TopPlayersContainer" parent="." instance=ExtResource("11_mad0u")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 0.0
+offset_bottom = 387.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[connection signal="pause_game" from="HUD" to="." method="_on_hud_pause_game"]
+[connection signal="row_moved_down" from="InvaderGrid" to="." method="_on_invader_grid_row_moved_down"]
+[connection signal="timeout" from="InvaderMoveTimer" to="." method="_on_invader_move_timer_timeout"]
+[connection signal="game_started" from="GameMenuContainer" to="." method="_on_game_menu_container_game_started"]

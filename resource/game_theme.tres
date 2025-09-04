@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cuya3oesxofh2"]
+
+[ext_resource type="StyleBox" uid="uid://bbsgcg345owu" path="res://resource/panel_container.tres" id="1_vo4x1"]
+[ext_resource type="FontFile" uid="uid://bryhi0ncxxbjq" path="res://assets/font/Pixel.ttf" id="2_sm43f"]
+
+[resource]
+default_font = ExtResource("2_sm43f")
+default_font_size = 20
+HeaderLabel/base_type = &"Label"
+HeaderLabel/font_sizes/font_size = 48
+PanelContainer/styles/panel = ExtResource("1_vo4x1")
+Wrapper/base_type = &"MarginContainer"
+Wrapper/constants/margin_left = 48
+Wrapper/constants/margin_right = 48

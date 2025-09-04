@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://gm21bw4cc6i6"]
+
+[ext_resource type="Script" uid="uid://cs6pl6r4334t8" path="res://world/invader_grid.gd" id="1_fstuk"]
+
+[node name="InvaderGrid" type="Node"]
+script = ExtResource("1_fstuk")

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgjvwpw5aln1q"]
+
+[ext_resource type="PackedScene" uid="uid://bnhatq1g8uroh" path="res://ui/buttons/screen_button.tscn" id="1_0r50d"]
+[ext_resource type="StyleBox" uid="uid://da3qt2ipwspw0" path="res://resource/play_button.tres" id="2_bhtho"]
+
+[node name="PlayButton" instance=ExtResource("1_0r50d")]
+custom_minimum_size = Vector2(32, 32)
+theme_override_styles/focus = ExtResource("2_bhtho")
+theme_override_styles/hover = ExtResource("2_bhtho")
+theme_override_styles/pressed = ExtResource("2_bhtho")
+theme_override_styles/normal = ExtResource("2_bhtho")
+click_sound = "play_button"

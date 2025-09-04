@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2xlanqdypmdo"]
+
+[ext_resource type="Script" uid="uid://bwme8jht7i6hg" path="res://ui/pause_container.gd" id="1_14g3b"]
+[ext_resource type="Theme" uid="uid://cuya3oesxofh2" path="res://resource/game_theme.tres" id="1_s52ra"]
+[ext_resource type="PackedScene" uid="uid://dgjvwpw5aln1q" path="res://ui/buttons/play_button.tscn" id="3_s52ra"]
+
+[node name="PauseContainer" type="MarginContainer"]
+process_mode = 3
+custom_minimum_size = Vector2(0, 200)
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -60.5
+offset_bottom = 60.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_s52ra")
+theme_type_variation = &"Wrapper"
+script = ExtResource("1_14g3b")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 48
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"HeaderLabel"
+text = "GAME PAUSED!"
+horizontal_alignment = 1
+
+[node name="ResumeButton" parent="PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_s52ra")]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]

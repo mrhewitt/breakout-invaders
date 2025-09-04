@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cekiawul3bpfd"]
+
+[ext_resource type="PackedScene" uid="uid://cllg2tqqw6ydt" path="res://entities/pickups/pickup.tscn" id="1_mbh5j"]
+[ext_resource type="Script" uid="uid://dvvmu5moal3wn" path="res://entities/pickups/coin_pickup.gd" id="2_jrdj8"]
+
+[node name="CoinPickup" instance=ExtResource("1_mbh5j")]
+script = ExtResource("2_jrdj8")
+animation_name = "coin"

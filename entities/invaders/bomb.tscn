@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://d4m4watlueu3h"]
+
+[ext_resource type="Texture2D" uid="uid://cigactwaocchl" path="res://assets/invaders/bomb-01.png" id="1_rl845"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qc3o"]
+atlas = ExtResource("1_rl845")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdmmn"]
+atlas = ExtResource("1_rl845")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3jeaw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qc3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdmmn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rl845"]
+size = Vector2(19, 29)
+
+[node name="Bomb" type="Area2D"]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3jeaw")
+autoplay = "default"
+frame_progress = 0.625896
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 1.5)
+shape = SubResource("RectangleShape2D_rl845")

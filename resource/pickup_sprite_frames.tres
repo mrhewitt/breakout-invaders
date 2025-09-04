@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://cahmkghlkha41"]
+
+[ext_resource type="Texture2D" uid="uid://caa8kkcvc2w6l" path="res://assets/invaders/pickups.png" id="1_3j3mk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svq4n"]
+atlas = ExtResource("1_3j3mk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjr0w"]
+atlas = ExtResource("1_3j3mk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0i4jh"]
+atlas = ExtResource("1_3j3mk")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1koel"]
+atlas = ExtResource("1_3j3mk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rd3ec"]
+atlas = ExtResource("1_3j3mk")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3y6y"]
+atlas = ExtResource("1_3j3mk")
+region = Rect2(160, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svq4n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjr0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0i4jh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1koel")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rd3ec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t3y6y")
+}],
+"loop": true,
+"name": &"coin",
+"speed": 6.0
+}]
