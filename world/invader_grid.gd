@@ -43,10 +43,22 @@ func _process(delta: float) -> void:
 			
 	
 # "shuffle" invaders to left or right
-func shuffle() -> void:
-	for invader in get_children():
+func shuffle() -> void:	
+	var invaders = get_tree().get_nodes_in_group('invader')
+	
+	# if we only have as many invaders left as coin drops, force them to drop coins
+	# now otherwise it may be we kill them before RNG creates a coin and player is cheated
+	var force_coin_spawn: bool = GameManager.coins_left_in_wave ==  invaders.size()
+	
+	for invader in invaders:
 		invader.shuffle(direction)
-		
+		# if we are forcing a coin spawn, try it now, method returns false if no coin
+		# was spawned (i.e. not bottom-most invader) so keep force coin true until
+		# spawn_coint returns true (coin spawned) then force becomes false so no further
+		# spawns happen this cycle
+		if force_coin_spawn:
+			force_coin_spawn = !invader.spawn_coin()
+			
 	if steps_down > 0:
 		steps_down -= 1
 		if steps_down == 0:
@@ -65,4 +77,5 @@ func create_invaders() -> void:
 		for row in range(0,ROW_COUNT):
 			var invader = INVADER.instantiate()
 			add_child(invader)
+			invader.invader_index = 0
 			invader.global_position = Vector2(margin_x + (column*COLUMN_SPACING),300 + (ROW_SPACING*row))

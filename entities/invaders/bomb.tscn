@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://d4m4watlueu3h"]
+[gd_scene load_steps=7 format=3 uid="uid://d4m4watlueu3h"]
 
+[ext_resource type="Script" uid="uid://dwfch0gskfcod" path="res://entities/invaders/bomb.gd" id="1_2qc3o"]
 [ext_resource type="Texture2D" uid="uid://cigactwaocchl" path="res://assets/invaders/bomb-01.png" id="1_rl845"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2qc3o"]
@@ -28,12 +29,17 @@ animations = [{
 size = Vector2(19, 29)
 
 [node name="Bomb" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_2qc3o")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3jeaw")
 autoplay = "default"
-frame_progress = 0.625896
+frame_progress = 0.342003
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 1.5)
 shape = SubResource("RectangleShape2D_rl845")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

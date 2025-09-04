@@ -1,11 +1,18 @@
 extends Node
 
+signal health_updated(health: int)
 signal score_updated(score: int)
 signal high_score_updated(score: int)
 signal coins_updated(score: int)
 signal wave_updated(score: int)
 signal top_player_updated(top_player: Dictionary)
 
+
+var health: int = 6:
+	set(health_in):
+		health = clampi(health_in,0,6)
+		health_updated.emit(health)
+			
 var score: int = 0:
 	set(score_in):
 		score = score_in
@@ -25,15 +32,21 @@ var coins: int = 0:
 		
 var wave: int = 1:
 	set(wave_in):
-		wave = wave_in		
-		wave_updated.emit(score)
-
+		wave = wave_in
+		wave_updated.emit(wave)
+		# get one more coin than current wave number every wave,
+		# so 2 coins in wave 1, 3 coins in wave 2 etc etc
+		coins_left_in_wave = wave + 1
+		
 var top_player: Dictionary:
 	set(top):
 		top_player_updated.emit(top)
 
 
-var high_score_list: Array[Dictionary]
+var high_score_list: Array[Dictionary] = [{name="Bob",score=10223},{name="Adian1",score=3912},{name="Predator88518",score=324}]
+# tracks number of coins that can still be spawned in the current wave
+# dec this each time a coin is dropped
+var coins_left_in_wave: int = 0
 
 
 func new_game() -> void:
@@ -56,7 +69,7 @@ func get_api_key() -> String:
 		
 
 func load_high_scores() -> void:
-	set_high_score_list([{name='Player 1', score=21}])
+	set_high_score_list([{name="Bob",score=10223},{name="Adian1",score=3912},{name="Predator88518",score=324}])
 	return
 	
 	var http_request = HTTPRequest.new()
@@ -81,13 +94,14 @@ func _http_request_completed(result, response_code, headers, body):
 	# parse json into an array of score dictionaries ...
 	# [ {name:xxx, score:000.00},..]
 	var scores = json.get_data()
+	set_high_score_list(scores)
 	
 	
-func set_high_score_list( scores: Array ) -> void:
+func set_high_score_list( _scores: Array ) -> void:
 	# parse into high score array, Godot does not like to assign it direct, plus
 	# by default json is parsing number as floats, so force convert to int to proceed 
-	for score in scores:
-		high_score_list.append( {name=score.name, score=int(score.score)} )
+	for _score in _scores:
+		high_score_list.append( {name=_score.name, score=int(_score.score)} )
 		
 	# update high scores and top player info for UI and data updates	
 	if high_score_list.size():

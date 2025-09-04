@@ -1,11 +1,18 @@
 extends Area2D
 class_name Pickup
 
+const SPEED: float = 200
+
+	
 @export var animation_name: String = ""
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
 	animated_sprite_2d.play(animation_name)
+
+
+func _physics_process(delta: float) -> void:
+	global_position.y += SPEED * delta
 
 
 # overridable method for inherited scenes to implement to handle action needed when 

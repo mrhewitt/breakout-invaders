@@ -6,13 +6,14 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_td0co"]
 
 [node name="Pickup" type="Area2D"]
+collision_layer = 8
 script = ExtResource("1_td0co")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_nks83")
 animation = &"coin"
 autoplay = "coin"
-frame_progress = 0.777563
+frame_progress = 0.136972
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_td0co")

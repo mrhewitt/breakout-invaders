@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://7caf5r6l7cj4"]
+[gd_scene load_steps=7 format=3 uid="uid://7caf5r6l7cj4"]
 
 [ext_resource type="Theme" uid="uid://cuya3oesxofh2" path="res://resource/game_theme.tres" id="1_n50jg"]
 [ext_resource type="Script" uid="uid://hkjel6v60ukt" path="res://ui/top_players_container.gd" id="2_rr151"]
+[ext_resource type="PackedScene" uid="uid://bnhatq1g8uroh" path="res://ui/buttons/screen_button.tscn" id="3_lj4r1"]
+[ext_resource type="Texture2D" uid="uid://bcenfw7pbi3ks" path="res://assets/ui/buttons/SpaceInvaders_Icons.png" id="4_eyikk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvd6x"]
+atlas = ExtResource("4_eyikk")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lj4r1"]
+texture = SubResource("AtlasTexture_cvd6x")
 
 [node name="TopPlayersContainer" type="MarginContainer"]
 anchors_preset = 14
@@ -19,7 +28,6 @@ theme_type_variation = &"Wrapper"
 script = ExtResource("2_rr151")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
@@ -44,98 +52,39 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList"]
+[node name="NamesVBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer"]
-layout_mode = 2
-text = "Daddio Dragonslayer"
-horizontal_alignment = 2
-
-[node name="Label9" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer"]
-layout_mode = 2
-text = "Daddio Dragonslayer"
-horizontal_alignment = 2
-
-[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer"]
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/NamesVBoxContainer"]
 layout_mode = 2
 text = "Bob"
 horizontal_alignment = 2
 
-[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer"]
+[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/NamesVBoxContainer"]
 layout_mode = 2
 text = "Jimbo"
 horizontal_alignment = 2
 
-[node name="Label4" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer"]
+[node name="ScoresVBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Daddio Dragonslayer"
-horizontal_alignment = 2
+size_flags_horizontal = 3
 
-[node name="Label5" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer"]
-layout_mode = 2
-text = "Daddio Dragonslayer"
-horizontal_alignment = 2
-
-[node name="Label6" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer"]
-layout_mode = 2
-text = "Daddio Dragonslayer"
-horizontal_alignment = 2
-
-[node name="Label7" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer"]
-layout_mode = 2
-text = "Daddio Dragonslayer"
-horizontal_alignment = 2
-
-[node name="Label8" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer"]
-layout_mode = 2
-text = "Daddio Dragonslayer"
-horizontal_alignment = 2
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer2"]
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/ScoresVBoxContainer"]
 layout_mode = 2
 text = "212434"
-horizontal_alignment = 2
 
-[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer2"]
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/ScoresVBoxContainer"]
 layout_mode = 2
 text = "212434"
-horizontal_alignment = 2
 
-[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer2"]
+[node name="MenuButton" parent="PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_lj4r1")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-text = "212434"
-horizontal_alignment = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_lj4r1")
 
-[node name="Label9" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer2"]
-layout_mode = 2
-text = "212434"
-horizontal_alignment = 2
-
-[node name="Label4" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer2"]
-layout_mode = 2
-text = "212434"
-horizontal_alignment = 2
-
-[node name="Label5" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer2"]
-layout_mode = 2
-text = "212434"
-horizontal_alignment = 2
-
-[node name="Label6" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer2"]
-layout_mode = 2
-text = "212434"
-horizontal_alignment = 2
-
-[node name="Label7" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer2"]
-layout_mode = 2
-text = "212434"
-horizontal_alignment = 2
-
-[node name="Label8" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PlayerItemList/VBoxContainer2"]
-layout_mode = 2
-text = "212434"
-horizontal_alignment = 2
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]

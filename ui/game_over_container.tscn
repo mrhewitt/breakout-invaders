@@ -1,0 +1,158 @@
+[gd_scene load_steps=12 format=3 uid="uid://b73nxmjliu1xo"]
+
+[ext_resource type="Script" uid="uid://lqgxafiefip1" path="res://ui/game_over_container.gd" id="1_4l2ra"]
+[ext_resource type="Texture2D" uid="uid://caa8kkcvc2w6l" path="res://assets/invaders/pickups.png" id="1_50lgk"]
+[ext_resource type="Theme" uid="uid://cuya3oesxofh2" path="res://resource/game_theme.tres" id="1_wmuev"]
+[ext_resource type="PackedScene" uid="uid://dgjvwpw5aln1q" path="res://ui/buttons/play_button.tscn" id="4_27wwx"]
+[ext_resource type="PackedScene" uid="uid://bnhatq1g8uroh" path="res://ui/buttons/screen_button.tscn" id="5_gv4ds"]
+[ext_resource type="Texture2D" uid="uid://bcenfw7pbi3ks" path="res://assets/ui/buttons/SpaceInvaders_Icons.png" id="6_w58lp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocfjn"]
+atlas = ExtResource("1_50lgk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv4ds"]
+atlas = ExtResource("6_w58lp")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w58lp"]
+texture = SubResource("AtlasTexture_gv4ds")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w58lp"]
+atlas = ExtResource("6_w58lp")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56r3u"]
+texture = SubResource("AtlasTexture_w58lp")
+
+[node name="GameOverContainer" type="MarginContainer"]
+z_index = 10
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_wmuev")
+theme_type_variation = &"Wrapper"
+script = ExtResource("1_4l2ra")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "GAME OVER!"
+horizontal_alignment = 1
+
+[node name="ScoreBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer/ScoreBoxContainer"]
+layout_mode = 2
+text = "YOUR SCORE:"
+
+[node name="ScoreLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer/ScoreBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "13816"
+
+[node name="HighScoreHBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer/HighScoreHBoxContainer"]
+layout_mode = 2
+text = "BEST SCORE:"
+
+[node name="HighScoreLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer/HighScoreHBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "3821"
+
+[node name="CoinsBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CoinTextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer/CoinsBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = SubResource("AtlasTexture_ocfjn")
+
+[node name="CoinCounterLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer3/VBoxContainer/CoinsBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "x 12"
+
+[node name="TopScoreVBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="NewTopScoreLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "NEW TOP SCORE!!"
+horizontal_alignment = 1
+
+[node name="EnterNameLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer"]
+layout_mode = 2
+text = "Enter your name:"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="NameTextEdit" type="TextEdit" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(480, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Player One"
+emoji_menu_enabled = false
+
+[node name="SaveScoreButton" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer/HBoxContainer" instance=ExtResource("5_gv4ds")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_w58lp")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_constants/separation = 128
+alignment = 1
+
+[node name="PlayButton" parent="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer" instance=ExtResource("4_27wwx")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MenuButton" parent="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer" instance=ExtResource("5_gv4ds")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_56r3u")
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]

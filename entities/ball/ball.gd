@@ -8,12 +8,17 @@ var last_edge_bumped: CollisionShape2D = null
 
 
 func _ready() -> void:
-	target_velocity = Vector2(100,-200 ) 
+	launch()
+
+
+func launch() -> void:
+	target_velocity = -global_transform.y * speed
 	velocity = target_velocity
 	rotation = velocity.angle()
 
+
 func _physics_process(delta: float) -> void:
-	var collision = move_and_collide(velocity    * delta)
+	var collision = move_and_collide(velocity  * delta)
 	if collision:
 		reset_last_edge()
 		

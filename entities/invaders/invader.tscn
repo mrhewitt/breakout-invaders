@@ -1,18 +1,152 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqyg5vqlkjgpx"]
+[gd_scene load_steps=21 format=3 uid="uid://cqyg5vqlkjgpx"]
 
-[ext_resource type="Texture2D" uid="uid://cjspdlwheotta" path="res://assets/invaders/invader-01.png" id="1_r8rc4"]
 [ext_resource type="Script" uid="uid://djsf4mskthk63" path="res://entities/invaders/invader.gd" id="1_wl0cq"]
+[ext_resource type="Texture2D" uid="uid://dqd3yjxl3ydi7" path="res://assets/invaders/explosion-01.png" id="2_3mv3w"]
+[ext_resource type="PackedScene" uid="uid://d4m4watlueu3h" path="res://entities/invaders/bomb.tscn" id="2_nv8go"]
+[ext_resource type="Texture2D" uid="uid://csg3bu3xl2p3y" path="res://assets/invaders/invader-atlas.png" id="2_wl0cq"]
+[ext_resource type="PackedScene" uid="uid://cekiawul3bpfd" path="res://entities/pickups/coin_pickup.tscn" id="3_670jw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wl0cq"]
 size = Vector2(38, 29)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qc4jv"]
+atlas = ExtResource("2_3mv3w")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfkpk"]
+atlas = ExtResource("2_3mv3w")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02uky"]
+atlas = ExtResource("2_3mv3w")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mv3w"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nv8go"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_670jw"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lbl0"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptc76"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yug7f"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nx3n"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_827p3"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfdcl"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(0, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kw66"]
+atlas = ExtResource("2_wl0cq")
+region = Rect2(64, 256, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qc4jv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qc4jv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfkpk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02uky")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mv3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nv8go")
+}],
+"loop": false,
+"name": &"invader-01",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_670jw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lbl0")
+}],
+"loop": true,
+"name": &"invader-02",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ptc76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yug7f")
+}],
+"loop": true,
+"name": &"invader-03",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nx3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_827p3")
+}],
+"loop": true,
+"name": &"invader-04",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfdcl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kw66")
+}],
+"loop": true,
+"name": &"invader-05",
+"speed": 5.0
+}]
+
 [node name="Invader" type="StaticBody2D" groups=["invader"]]
+collision_layer = 5
 script = ExtResource("1_wl0cq")
+bomb_scene = ExtResource("2_nv8go")
+coin_scene = ExtResource("3_670jw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3, 0.5)
 shape = SubResource("RectangleShape2D_wl0cq")
 
-[node name="Sprite2D" type="Sprite2D" parent="." groups=["invader"]]
-texture = ExtResource("1_r8rc4")
-hframes = 2
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qc4jv")
+animation = &"death"
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 700)
+collision_mask = 4

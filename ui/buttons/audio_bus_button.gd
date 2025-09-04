@@ -4,7 +4,7 @@ extends ToggleScreenButton
 
 
 func _ready() -> void:
-	is_on = AudioServer.is_bus_mute( get_bus_idx() )
+	is_on = !AudioServer.is_bus_mute( get_bus_idx() )
 
 
 func _on_pressed() -> void:

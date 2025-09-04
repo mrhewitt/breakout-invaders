@@ -23,6 +23,7 @@ buses/default_bus_layout="uid://d3fo4bsl605wp"
 
 SfxPlayer="*res://scripts/globals/sfx_player.gd"
 GameManager="*res://scripts/globals/game_manager.gd"
+MusicPlayer="*res://scripts/globals/music_player.gd"
 
 [display]
 
@@ -68,6 +69,9 @@ screenshot={
 [layer_names]
 
 2d_physics/layer_1="Ball Bounds"
+2d_physics/layer_2="Death Zone"
+2d_physics/layer_3="Invaders"
+2d_physics/layer_4="Pickups"
 
 [rendering]
 

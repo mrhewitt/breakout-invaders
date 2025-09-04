@@ -1,6 +1,7 @@
 extends MarginContainer
 
 signal game_started
+signal top_scores
 
 @onready var top_player_score: Label = %TopPlayerScore
 
@@ -8,6 +9,7 @@ signal game_started
 func _ready() -> void:
 	top_player_score.text = "Loading scores..."
 	GameManager.top_player_updated.connect(show_top_player)
+	MusicPlayer.play('theme')
 	
 
 func _on_play_button_pressed() -> void:
@@ -27,3 +29,8 @@ func _on_play_button_pressed() -> void:
 	
 func show_top_player(top_player: Dictionary) -> void:
 	top_player_score.text = top_player.name + ": " + str(top_player.score)
+
+
+func _on_top_scores_button_pressed() -> void:
+	visible = false
+	top_scores.emit()

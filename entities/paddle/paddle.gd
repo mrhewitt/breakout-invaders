@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var ball_scene: PackedScene
+
 @export var speed: float = 400.0
 @export var accel: float = 20.0
 @export var deccel: float = 10.0
@@ -16,13 +18,22 @@ var displacement: float = 0
 var oscillator_velocity: float = 0
 
 
+func hit_by_bomb() -> void:
+	pass
+	
+
 func _process(delta: float) -> void:	
 	var dir: float = 0
 	if Input.is_action_pressed("move_left"):
 		dir = -1
 	if Input.is_action_pressed("move_right"):
 		dir = 1	
-	
+	if Input.is_action_just_pressed("fire_action"):
+		var ball = ball_scene.instantiate()
+		ball.global_position = global_position + Vector2(0,-24)
+		get_parent().add_child(ball)
+	#	ball.launch()
+		
 	# smoothen the movement
 	if dir != 0:
 		velocity.x = lerp(velocity.x, dir * speed, accel * delta)

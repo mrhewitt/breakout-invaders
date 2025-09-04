@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://gmlielrkjsvt"]
+[gd_scene load_steps=17 format=3 uid="uid://gmlielrkjsvt"]
 
 [ext_resource type="Texture2D" uid="uid://fdrplw3a8h4l" path="res://assets/background/SpaceInvaders_Background.png" id="1_6xmxd"]
 [ext_resource type="Script" uid="uid://dhp0td1arxkwt" path="res://world/world.gd" id="1_fn3g3"]
@@ -7,19 +7,20 @@
 [ext_resource type="PackedScene" uid="uid://n2fd74tuta5f" path="res://entities/paddle/paddle.tscn" id="3_fn3g3"]
 [ext_resource type="PackedScene" uid="uid://gm21bw4cc6i6" path="res://world/invader_grid.tscn" id="5_ai45w"]
 [ext_resource type="PackedScene" uid="uid://rto7lxxjwb0i" path="res://ui/hud.tscn" id="6_4papg"]
-[ext_resource type="AudioStream" uid="uid://wxw4q245f8cg" path="res://assets/audio/Funky-Chiptune.mp3" id="10_fyhu2"]
+[ext_resource type="PackedScene" uid="uid://cdjtobxnjq0hx" path="res://entities/ball/ball.tscn" id="7_sc4t8"]
 [ext_resource type="PackedScene" uid="uid://7caf5r6l7cj4" path="res://ui/top_players_container.tscn" id="11_mad0u"]
 [ext_resource type="PackedScene" uid="uid://c421k7ke8tl76" path="res://ui/game_menu_container.tscn" id="11_ov2xu"]
+[ext_resource type="PackedScene" uid="uid://b73nxmjliu1xo" path="res://ui/game_over_container.tscn" id="12_mad0u"]
 [ext_resource type="PackedScene" uid="uid://c2xlanqdypmdo" path="res://ui/pause_container.tscn" id="13_ocfjn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ai45w"]
-size = Vector2(880, 192)
+size = Vector2(1377, 192)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sc4t8"]
-size = Vector2(165, 1348)
+size = Vector2(185, 1154)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4papg"]
-size = Vector2(154, 1325)
+size = Vector2(154, 1128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fyhu2"]
 size = Vector2(996, 180)
@@ -71,39 +72,45 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0.0784314, 0.117647, 1)
 
-[node name="HUD" parent="." instance=ExtResource("6_4papg")]
+[node name="Game" type="Node" parent="."]
+process_mode = 4
+
+[node name="HUD" parent="Game" instance=ExtResource("6_4papg")]
 visible = false
-layout_mode = 1
+offset_bottom = 180.0
 
-[node name="InvaderGrid" parent="." instance=ExtResource("5_ai45w")]
+[node name="InvaderGrid" parent="Game" instance=ExtResource("5_ai45w")]
 
-[node name="Paddle" parent="." instance=ExtResource("3_fn3g3")]
+[node name="Paddle" parent="Game" instance=ExtResource("3_fn3g3")]
 visible = false
 position = Vector2(391, 1107)
+ball_scene = ExtResource("7_sc4t8")
 
-[node name="InvaderMoveTimer" type="Timer" parent="."]
+[node name="InvaderMoveTimer" type="Timer" parent="Game"]
 wait_time = 0.5
 autostart = true
 
 [node name="UpperBoundArea" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBoundArea"]
-position = Vector2(382, 86)
+position = Vector2(413.5, 86)
 shape = SubResource("RectangleShape2D_ai45w")
 
 [node name="LeftBoundArea" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundArea"]
-position = Vector2(-66.5, 664)
+position = Vector2(-56.5, 761)
 shape = SubResource("RectangleShape2D_sc4t8")
 
 [node name="RightBoundArea" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightBoundArea"]
-position = Vector2(786, 652.5)
+position = Vector2(786, 751)
 shape = SubResource("RectangleShape2D_4papg")
 
-[node name="DeatchZoneArea" type="StaticBody2D" parent="."]
+[node name="DeatchZoneArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeatchZoneArea"]
 position = Vector2(488, 1262)
@@ -121,25 +128,22 @@ layout_mode = 1
 offset_top = -277.0
 offset_bottom = 277.0
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_fyhu2")
-volume_db = -5.433
-autoplay = true
-bus = &"Music"
-
 [node name="TopPlayersContainer" parent="." instance=ExtResource("11_mad0u")]
 visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_top = 0.0
-offset_bottom = 387.0
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 1
+offset_top = -128.5
+offset_bottom = 128.5
 
-[connection signal="pause_game" from="HUD" to="." method="_on_hud_pause_game"]
-[connection signal="row_moved_down" from="InvaderGrid" to="." method="_on_invader_grid_row_moved_down"]
-[connection signal="timeout" from="InvaderMoveTimer" to="." method="_on_invader_move_timer_timeout"]
+[node name="GameOverContainer" parent="." instance=ExtResource("12_mad0u")]
+visible = false
+layout_mode = 1
+offset_top = -166.5
+offset_bottom = 166.5
+
+[connection signal="pause_game" from="Game/HUD" to="." method="_on_hud_pause_game"]
+[connection signal="row_moved_down" from="Game/InvaderGrid" to="." method="_on_invader_grid_row_moved_down"]
+[connection signal="timeout" from="Game/InvaderMoveTimer" to="." method="_on_invader_move_timer_timeout"]
+[connection signal="body_entered" from="DeatchZoneArea" to="." method="_on_deatch_zone_area_body_entered"]
 [connection signal="game_started" from="GameMenuContainer" to="." method="_on_game_menu_container_game_started"]
+[connection signal="top_scores" from="GameMenuContainer" to="." method="_on_game_menu_container_top_scores"]
+[connection signal="wave_started" from="GameOverContainer" to="." method="_on_game_over_container_wave_started"]
