@@ -24,6 +24,7 @@ buses/default_bus_layout="uid://d3fo4bsl605wp"
 SfxPlayer="*res://scripts/globals/sfx_player.gd"
 GameManager="*res://scripts/globals/game_manager.gd"
 MusicPlayer="*res://scripts/globals/music_player.gd"
+Screenshot="*res://scripts/globals/screenshot.gd"
 
 [display]
 
@@ -35,10 +36,15 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
 window/handheld/orientation=1
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/maaacks_credits_scene/plugin.cfg")
+
 [global_group]
 
 invader=""
 paddle=""
+decals=""
 
 [input]
 
@@ -68,10 +74,17 @@ screenshot={
 
 [layer_names]
 
-2d_physics/layer_1="Ball Bounds"
+2d_physics/layer_1="Paddle"
 2d_physics/layer_2="Death Zone"
 2d_physics/layer_3="Invaders"
 2d_physics/layer_4="Pickups"
+2d_physics/layer_5="Ball Bounds"
+
+[maaacks_credits_scene]
+
+disable_update_check=false
+disable_install_wizard=true
+copy_path="res://ui/"
 
 [rendering]
 

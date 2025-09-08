@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4ep0ncw5lsqe"]
+
+[ext_resource type="Texture2D" uid="uid://754f5ejkg2gu" path="res://assets/player/explosion-damage-decal.png" id="1_0oi6u"]
+[ext_resource type="Script" uid="uid://7byu5qci8loc" path="res://world/explosion_damage_decal.gd" id="2_y0fle"]
+
+[node name="ExplosionDamageDecal" type="Node2D" groups=["decals"]]
+script = ExtResource("2_y0fle")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 24)
+texture = ExtResource("1_0oi6u")

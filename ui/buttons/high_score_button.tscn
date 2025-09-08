@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://vwphxl1gv8wq"]
+
+[ext_resource type="PackedScene" uid="uid://bnhatq1g8uroh" path="res://ui/buttons/screen_button.tscn" id="1_8p4fs"]
+[ext_resource type="Texture2D" uid="uid://bcenfw7pbi3ks" path="res://assets/ui/buttons/SpaceInvaders_Icons.png" id="2_nl282"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8p4fs"]
+atlas = ExtResource("2_nl282")
+region = Rect2(160, 160, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nl282"]
+texture = SubResource("AtlasTexture_8p4fs")
+
+[node name="HighScoreButton" instance=ExtResource("1_8p4fs")]
+custom_minimum_size = Vector2(64, 64)
+theme_override_styles/focus = SubResource("StyleBoxTexture_nl282")
+theme_override_styles/hover = SubResource("StyleBoxTexture_nl282")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_nl282")
+theme_override_styles/normal = SubResource("StyleBoxTexture_nl282")
+click_sound = "play_button"

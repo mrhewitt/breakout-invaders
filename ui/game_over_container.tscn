@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://dgjvwpw5aln1q" path="res://ui/buttons/play_button.tscn" id="4_27wwx"]
 [ext_resource type="PackedScene" uid="uid://bnhatq1g8uroh" path="res://ui/buttons/screen_button.tscn" id="5_gv4ds"]
 [ext_resource type="Texture2D" uid="uid://bcenfw7pbi3ks" path="res://assets/ui/buttons/SpaceInvaders_Icons.png" id="6_w58lp"]
+[ext_resource type="PackedScene" uid="uid://b8vaulqild750" path="res://ui/buttons/menu_button.tscn" id="7_cvd6x"]
+[ext_resource type="PackedScene" uid="uid://vwphxl1gv8wq" path="res://ui/buttons/high_score_button.tscn" id="8_56r3u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ocfjn"]
 atlas = ExtResource("1_50lgk")
@@ -17,13 +19,6 @@ region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w58lp"]
 texture = SubResource("AtlasTexture_gv4ds")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w58lp"]
-atlas = ExtResource("6_w58lp")
-region = Rect2(64, 32, 32, 32)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56r3u"]
-texture = SubResource("AtlasTexture_w58lp")
 
 [node name="GameOverContainer" type="MarginContainer"]
 z_index = 10
@@ -121,24 +116,33 @@ layout_mode = 2
 text = "Enter your name:"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer"]
+[node name="NameInputHBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="NameTextEdit" type="TextEdit" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer/HBoxContainer"]
+[node name="NameTextEdit" type="TextEdit" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer/NameInputHBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(480, 36)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Player One"
 emoji_menu_enabled = false
 
-[node name="SaveScoreButton" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer/HBoxContainer" instance=ExtResource("5_gv4ds")]
+[node name="SaveScoreButton" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer/NameInputHBoxContainer" instance=ExtResource("5_gv4ds")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_w58lp")
+
+[node name="SavingLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Saving top scores..."
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer3"]
 layout_mode = 2
@@ -147,12 +151,18 @@ alignment = 1
 
 [node name="PlayButton" parent="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer" instance=ExtResource("4_27wwx")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
-[node name="MenuButton" parent="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer" instance=ExtResource("5_gv4ds")]
+[node name="MenuButton" parent="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer" instance=ExtResource("7_cvd6x")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_56r3u")
 
+[node name="HighScoresButton" parent="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer" instance=ExtResource("8_56r3u")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer3/TopScoreVBoxContainer/NameInputHBoxContainer/SaveScoreButton" to="." method="_on_save_score_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer3/HBoxContainer/HighScoresButton" to="." method="_on_high_score_button_pressed"]

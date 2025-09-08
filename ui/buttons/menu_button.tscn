@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8vaulqild750"]
+
+[ext_resource type="PackedScene" uid="uid://bnhatq1g8uroh" path="res://ui/buttons/screen_button.tscn" id="1_shsh4"]
+[ext_resource type="Texture2D" uid="uid://bcenfw7pbi3ks" path="res://assets/ui/buttons/SpaceInvaders_Icons.png" id="2_shsh4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77l2a"]
+atlas = ExtResource("2_shsh4")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s2itk"]
+texture = SubResource("AtlasTexture_77l2a")
+
+[node name="MenuButton" instance=ExtResource("1_shsh4")]
+custom_minimum_size = Vector2(64, 64)
+theme_override_styles/focus = SubResource("StyleBoxTexture_s2itk")
+theme_override_styles/hover = SubResource("StyleBoxTexture_s2itk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_s2itk")
+theme_override_styles/normal = SubResource("StyleBoxTexture_s2itk")
+click_sound = "play_button"

@@ -22,13 +22,13 @@ func play_stream(sound_to_play: AudioStream) -> void:
 	# your sound will not play 
 	if _music_audio_player == null:
 		_music_audio_player = AudioStreamPlayer.new()
-		get_tree().get_current_scene().add_child(_music_audio_player)
+		get_tree().get_current_scene().add_child.call_deferred(_music_audio_player)
 		# tell it to start playing the sound we chose
 		_music_audio_player.bus = "Music"
 		_music_audio_player.connect("finished", _on_music_finished)
 		
 	_music_audio_player.stream = sound_to_play
-	_music_audio_player.play() 
+	_music_audio_player.play.call_deferred() 
 	
 	
 func _on_music_finished() -> void:

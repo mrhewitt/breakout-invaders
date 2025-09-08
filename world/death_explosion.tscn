@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://eftmh7rmacfv"]
+
+[ext_resource type="Script" uid="uid://2hkfisvc5j84" path="res://world/death_explosion.gd" id="2_1eg8q"]
+[ext_resource type="SpriteFrames" uid="uid://bujymroh7aang" path="res://world/death_explosion_animation.tres" id="2_8a8ag"]
+
+[node name="DeathExplosion" type="Node2D"]
+script = ExtResource("2_1eg8q")
+explosion_animation = ExtResource("2_8a8ag")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

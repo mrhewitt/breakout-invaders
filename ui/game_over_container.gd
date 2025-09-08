@@ -1,6 +1,8 @@
 extends MarginContainer
 
 signal wave_started
+signal game_menu
+signal high_scores
 
 const COIN_PICKUP = preload("res://entities/pickups/coin_pickup.tscn")
 const COIN_RECT_ALPHA: float = 0.4
@@ -13,6 +15,12 @@ const COIN_RECT_ALPHA: float = 0.4
 @onready var top_score_v_box_container: VBoxContainer = %TopScoreVBoxContainer
 @onready var title_label: Label = %TitleLabel
 @onready var play_button: ScreenButton = %PlayButton
+@onready var menu_button: ScreenButton = %MenuButton
+@onready var high_scores_button: ScreenButton = %HighScoresButton
+@onready var name_text_edit: TextEdit = %NameTextEdit
+@onready var name_input_h_box_container: HBoxContainer = %NameInputHBoxContainer
+@onready var saving_label: Label = %SavingLabel
+
 
 var coin_instance: CoinPickup
 var coins: int = 2
@@ -25,28 +33,41 @@ var is_game_over: bool = false
 
 func _ready() -> void:
 	GameManager.score_updated.connect( set_score )
-	GameManager.high_score_updated.connect( set_high_score )
+	#GameManager.high_score_updated.connect( set_high_score )
 	GameManager.coins_updated.connect( set_coins )	
+	GameManager.top_player_updated.connect( set_high_score )
+	GameManager.wave_updated.connect( new_wave )
+	
+	
+func new_wave(wave: int) -> void:
+	is_game_over = false
 	
 	
 func level_complete() -> void:
 	is_game_over = false
+	new_top_score = false
 	title_label.text = 'WAVE CLEARED!'
 	play_button.visible = true
+	menu_button.visible = false
+	high_scores_button.visible = false
 	accumulate_score()
-	
+
+
 func game_over() -> void:
 	is_game_over = true
+	new_top_score = false
 	title_label.text = 'GAME OVER!'
 	play_button.visible = false
+	menu_button.visible = true
+	high_scores_button.visible = true
 	accumulate_score()
-	
+
 
 func accumulate_score() -> void:
 	# if high score has tracked higher than our last level complete tracked score
 	# reset it to match our last tracked score so we can visually see it increate
-	if high_score > last_score:
-		high_score = last_score
+	#if high_score > last_score:
+	#	high_score = last_score
 		
 	top_score_v_box_container.visible = false
 	coins_box_container.visible = false
@@ -61,7 +82,7 @@ func accumulate_score() -> void:
 func count_score(points: int) -> void:
 	# stop recursing when we hit our total score
 	if points >= score:
-		last_score = score
+	#	last_score = score
 		start_coin_cointer()
 		return
 		
@@ -136,11 +157,32 @@ func set_score( _score: int) -> void:
 	score = _score
 	
 	
-func set_high_score( _high_score: int) -> void:
-	high_score = _high_score
-	new_top_score = true
+func set_high_score( top_player: Dictionary ) -> void:
+	high_score = top_player.score
+	high_score_label.text = str(high_score)
+	if is_game_over:
+		name_input_h_box_container.visible = true
+		saving_label.visible = false
+		_on_high_score_button_pressed()
 
 
 func _on_play_button_pressed() -> void:
 	visible = false
 	wave_started.emit()
+
+
+func _on_menu_button_pressed() -> void:
+	visible = false
+	game_menu.emit()
+
+
+func _on_high_score_button_pressed() -> void:
+	visible = false
+	high_scores.emit()
+
+
+func _on_save_score_button_pressed() -> void:
+	name_input_h_box_container.visible = false
+	saving_label.visible = true
+	GameManager.save_high_score( name_text_edit.text, high_score )
+	

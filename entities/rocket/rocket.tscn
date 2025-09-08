@@ -1,0 +1,61 @@
+[gd_scene load_steps=11 format=3 uid="uid://cdjtobxnjq0hx"]
+
+[ext_resource type="Script" uid="uid://c4o75rkk3hr2" path="res://entities/rocket/rocket.gd" id="1_61umk"]
+[ext_resource type="Curve2D" uid="uid://c5g6rcwdxrlpv" path="res://entities/rocket/rocket_curve_left.tres" id="2_c1mwr"]
+[ext_resource type="Texture2D" uid="uid://8cimlwu4rqmf" path="res://assets/player/projectile-sheet.png" id="2_jyt08"]
+[ext_resource type="Curve2D" uid="uid://dmxrffgty32lo" path="res://entities/rocket/rocket_curve_right.tres" id="3_qkdku"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5wpn"]
+atlas = ExtResource("2_jyt08")
+region = Rect2(0, 0, 13, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_we1t7"]
+atlas = ExtResource("2_jyt08")
+region = Rect2(13, 0, 13, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mrx1"]
+atlas = ExtResource("2_jyt08")
+region = Rect2(26, 0, 13, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thfbu"]
+atlas = ExtResource("2_jyt08")
+region = Rect2(39, 0, 13, 51)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jci73"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5wpn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_we1t7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6mrx1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thfbu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jyt08"]
+radius = 6.0
+
+[node name="Rocket" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 23
+script = ExtResource("1_61umk")
+left_turn_curve = ExtResource("2_c1mwr")
+right_turn_curve = ExtResource("3_qkdku")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 1.5708
+sprite_frames = SubResource("SpriteFrames_jci73")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(20, 0)
+shape = SubResource("CircleShape2D_jyt08")

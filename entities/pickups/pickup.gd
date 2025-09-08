@@ -9,7 +9,14 @@ const SPEED: float = 200
 
 func _ready() -> void:
 	animated_sprite_2d.play(animation_name)
+	GameManager.game_over.connect(clear_item)
 
+
+func clear_item() -> void:
+	var tween = create_tween()
+	tween.tween_property(self,'modulate:a', 0, 0.3)
+	tween.tween_callback(queue_free)
+	
 
 func _physics_process(delta: float) -> void:
 	global_position.y += SPEED * delta

@@ -12,7 +12,12 @@ var SFX = {
 	pickup_coin = preload("res://assets/audio/sfx_coin_cluster3.wav"),
 	paddle_bounce = preload("res://assets/audio/sfx_sounds_impact6.wav"),
 	pause_in = preload("res://assets/audio/sfx_sounds_pause7_in.wav"),
-	play_button = preload("res://assets/audio/sfx_sounds_pause7_out.wav")
+	play_button = preload("res://assets/audio/sfx_sounds_pause7_out.wav"),
+	explosion_mid = preload("res://assets/audio/explosions_mid_1.ogg"),
+	explosion_tiny = preload("res://assets/audio/explosions_tiny_1.ogg"),
+	explosion_invader = preload("res://assets/audio/Balloon_Pop-002.wav"),
+	rocket_launch = preload("res://assets/audio/rocket_1.ogg"),
+	drop_bomb = preload("res://assets/audio/Bottle_POP-001.wav")
 }
 
 func play( sound_key: String ) -> void:

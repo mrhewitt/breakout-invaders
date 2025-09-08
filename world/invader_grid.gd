@@ -1,7 +1,12 @@
 extends Node
 class_name InvaderGrid
 
+# lets subscribers know invaders have move down a row, usually so managers
+# can alter difficulty, e..g making it run faster
 signal row_moved_down
+
+# let parents know the grid is now cleared of all entities
+signal grid_cleared
 
 const INVADER = preload("res://entities/invaders/invader.tscn")
 
@@ -25,27 +30,50 @@ var direction: ShuffleDirection = ShuffleDirection.RIGHT
 var next_direction: ShuffleDirection
 var steps_down: int = 0 
 
+var wait_to_clear_grid: bool = false
+
+
+func _ready() -> void:
+	GameManager.game_over.connect(_on_game_over)
+
 
 func _process(delta: float) -> void:
-	if direction != ShuffleDirection.DOWN:
-		var max_x: float = 0
-		var min_x: float = 99999
 	
-		for invader in get_children():
-			max_x = maxf(invader.global_position.x,max_x)
-			min_x = minf(invader.global_position.x,min_x)
+	# wait until all children in grid are gone, this means entites in level
+	# have finished their ending animation, so we can move on to shwo 
+	# show either game over or level cleared UI
+	if wait_to_clear_grid:
+		if get_children().size() == 0:
+			grid_cleared.emit()
+	else:
+		# if we are not moving down, check to see if invaders have reached
+		# edge of the screen, if so change shuffle direction 
+		if direction != ShuffleDirection.DOWN:
+			var max_x: float = 0
+			var min_x: float = 99999
 		
-		if (min_x < LEFT_MOTION_MARGIN and direction == ShuffleDirection.LEFT) \
-		   or (max_x > DISPLAY_WIDTH-RIGHT_MOTION_MARGIN and direction == ShuffleDirection.RIGHT):
-			next_direction = ShuffleDirection.LEFT if direction == ShuffleDirection.RIGHT else ShuffleDirection.RIGHT
-			direction = ShuffleDirection.DOWN
-			steps_down = SHUFFLE_DOWN_STEPS
+			for invader in get_children():
+				max_x = maxf(invader.global_position.x,max_x)
+				min_x = minf(invader.global_position.x,min_x)
 			
-	
+			if (min_x < LEFT_MOTION_MARGIN and direction == ShuffleDirection.LEFT) \
+			   or (max_x > DISPLAY_WIDTH-RIGHT_MOTION_MARGIN and direction == ShuffleDirection.RIGHT):
+				next_direction = ShuffleDirection.LEFT if direction == ShuffleDirection.RIGHT else ShuffleDirection.RIGHT
+				direction = ShuffleDirection.DOWN
+				steps_down = SHUFFLE_DOWN_STEPS
+
+
 # "shuffle" invaders to left or right
-func shuffle() -> void:	
+func shuffle() -> void:
 	var invaders = get_tree().get_nodes_in_group('invader')
 	
+	# if all invaders are destroyed flag wave is over, we do it in shuffle not immediatly
+	# on last invader destroyed to add a very slight delay effect to make it more natural
+	if invaders.size() == 0:
+		GameManager.wave_complete.emit(0)
+		wait_to_clear_grid = true
+		return
+		
 	# if we only have as many invaders left as coin drops, force them to drop coins
 	# now otherwise it may be we kill them before RNG creates a coin and player is cheated
 	var force_coin_spawn: bool = GameManager.coins_left_in_wave ==  invaders.size()
@@ -73,9 +101,21 @@ func clear() -> void:
 
 func create_invaders() -> void:
 	clear()
-	for column in range(0,COLUMN_COUNT):
-		for row in range(0,ROW_COUNT):
+	for row in range(0,ROW_COUNT):
+		for column in range(0,COLUMN_COUNT):
 			var invader = INVADER.instantiate()
 			add_child(invader)
 			invader.invader_index = 0
 			invader.global_position = Vector2(margin_x + (column*COLUMN_SPACING),300 + (ROW_SPACING*row))
+
+
+func _on_game_over() -> void:
+	wait_to_clear_grid = true
+	
+	# for all the remaining invaders, start each on on its downward game over dive
+	# do it so invaders do this sort of one after other, but close together, to avoid
+	# jitteryness of doing it sporadically at random
+	var delay: float = randf_range(0,0.05)
+	for invader in get_tree().get_nodes_in_group('invader'):
+		invader.start_game_over_dive(delay)
+		delay += randf_range(0,0.05)

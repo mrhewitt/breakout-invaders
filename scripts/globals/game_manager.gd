@@ -2,17 +2,20 @@ extends Node
 
 signal health_updated(health: int)
 signal score_updated(score: int)
-signal high_score_updated(score: int)
-signal coins_updated(score: int)
-signal wave_updated(score: int)
+signal high_score_updated(high_score: int)
+signal coins_updated(coins: int)
+signal wave_updated(wave: int)
 signal top_player_updated(top_player: Dictionary)
-
+signal game_over
+signal wave_complete
 
 var health: int = 6:
 	set(health_in):
 		health = clampi(health_in,0,6)
 		health_updated.emit(health)
-			
+		if health == 0:
+			game_over.emit()
+
 var score: int = 0:
 	set(score_in):
 		score = score_in
@@ -48,8 +51,12 @@ var high_score_list: Array[Dictionary] = [{name="Bob",score=10223},{name="Adian1
 # dec this each time a coin is dropped
 var coins_left_in_wave: int = 0
 
+# main container for all invders,rockets,bombs, etc
+var invader_grid: InvaderGrid = null
+
 
 func new_game() -> void:
+	invader_grid.clear()
 	score = 0
 	coins = 0
 	wave = 1
@@ -86,6 +93,24 @@ func load_high_scores() -> void:
 		print("An error occurred in the HTTP request.")		
 
 
+func save_high_score( name: String, score: int ) -> void:
+	high_score_list.append( {name=name, score=score} )
+	high_score_list.sort_custom( sort_high_scores )
+	
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(self._http_request_completed)
+
+	# Perform a GET request. The URL below returns JSON as of writing.
+	var api_key: String = "X-Master-key: " + get_api_key()
+	var error = http_request.request(			\
+		"https://api.jsonbin.io/v3/b/68b974cfd0ea881f4071608d?meta=false",			\
+		[api_key, "X-Bin-Meta:false"],			\
+		HTTPClient.Method.METHOD_PUT,
+		
+	)
+
+
 # Called when the HTTP request is completed.
 func _http_request_completed(result, response_code, headers, body):
 	var json = JSON.new()
@@ -111,3 +136,5 @@ func set_high_score_list( _scores: Array ) -> void:
 		high_score = 0
 		
 	
+func sort_high_scores(score_a, score_b) -> bool:
+	return score_a.score < score_b 

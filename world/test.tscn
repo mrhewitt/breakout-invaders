@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnlardbhocwgc"]
+
+[ext_resource type="Script" uid="uid://cfruglno0qk3t" path="res://world/test.gd" id="1_norx2"]
+[ext_resource type="PackedScene" uid="uid://gm21bw4cc6i6" path="res://world/invader_grid.tscn" id="2_norx2"]
+
+[node name="Test" type="Node2D"]
+script = ExtResource("1_norx2")
+
+[node name="InvaderGrid" parent="." instance=ExtResource("2_norx2")]

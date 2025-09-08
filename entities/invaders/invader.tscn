@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cqyg5vqlkjgpx"]
+[gd_scene load_steps=22 format=3 uid="uid://cqyg5vqlkjgpx"]
 
 [ext_resource type="Script" uid="uid://djsf4mskthk63" path="res://entities/invaders/invader.gd" id="1_wl0cq"]
 [ext_resource type="Texture2D" uid="uid://dqd3yjxl3ydi7" path="res://assets/invaders/explosion-01.png" id="2_3mv3w"]
@@ -133,8 +133,15 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Curve2D" id="Curve2D_670jw"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 27, -35, 0, 0, 0, 0, 52, -62, 0, 0, 0, 0, 80, -81, 0, 0, 0, 0, 118, -90, 0, 0, 0, 0, 163, -81, 0, 0, 0, 0, 190, -50, 0, 0, 0, 0, 209, -17, 0, 0, 0, 0, 222, 11, 0, 0, 0, 0, 228, 44, 0, 0, 0, 0, 229, 72, 0, 0, 0, 0, 218, 141, 0, 0, 0, 0, 200, 211, 0, 0, 0, 0, 177, 282, 0, 0, 0, 0, 151, 342, 0, 0, 0, 0, 49, 608, 0, 0, 0, 0, -205, 1216)
+}
+point_count = 17
+
 [node name="Invader" type="StaticBody2D" groups=["invader"]]
-collision_layer = 5
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_wl0cq")
 bomb_scene = ExtResource("2_nv8go")
 coin_scene = ExtResource("3_670jw")
@@ -145,8 +152,21 @@ shape = SubResource("RectangleShape2D_wl0cq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qc4jv")
-animation = &"death"
+animation = &"invader-01"
+autoplay = "invader-01"
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 700)
 collision_mask = 4
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_670jw")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(0, 8)
+rotation = -1.01011
+loop = false
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Path2D"]
+
+[connection signal="screen_exited" from="Path2D/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
