@@ -25,6 +25,7 @@ const SHUFFLE_DOWN_STEPS = 8
 enum ShuffleDirection {LEFT, RIGHT, DOWN}
 
 @onready var margin_x: int = (720 - ((COLUMN_COUNT-1)*COLUMN_SPACING)) / 2
+@onready var invader_move_timer: Timer = $InvaderMoveTimer
 
 var direction: ShuffleDirection = ShuffleDirection.RIGHT
 var next_direction: ShuffleDirection
@@ -43,8 +44,9 @@ func _process(delta: float) -> void:
 	# have finished their ending animation, so we can move on to shwo 
 	# show either game over or level cleared UI
 	if wait_to_clear_grid:
-		if get_children().size() == 0:
-			grid_cleared.emit()
+		if get_tree().get_nodes_in_group('invader').size() == 0:
+			queue_free()
+			grid_cleared.emit()		# tell game grid is clear and we can move on
 	else:
 		# if we are not moving down, check to see if invaders have reached
 		# edge of the screen, if so change shuffle direction 
@@ -52,7 +54,7 @@ func _process(delta: float) -> void:
 			var max_x: float = 0
 			var min_x: float = 99999
 		
-			for invader in get_children():
+			for invader in get_tree().get_nodes_in_group('invader'):
 				max_x = maxf(invader.global_position.x,max_x)
 				min_x = minf(invader.global_position.x,min_x)
 			
@@ -91,12 +93,14 @@ func shuffle() -> void:
 		steps_down -= 1
 		if steps_down == 0:
 			direction = next_direction
+			invader_move_timer.wait_time -= 0.025
 			row_moved_down.emit()
 	
 
 func clear() -> void:
-	for invader in get_children():
-		invader.free()
+	for child in get_children():
+		if not child is Timer:
+			child.free()
 
 
 func create_invaders() -> void:
@@ -111,11 +115,13 @@ func create_invaders() -> void:
 
 func _on_game_over() -> void:
 	wait_to_clear_grid = true
-	
+	invader_move_timer.stop()
+	invader_move_timer.queue_free()
+
 	# for all the remaining invaders, start each on on its downward game over dive
 	# do it so invaders do this sort of one after other, but close together, to avoid
 	# jitteryness of doing it sporadically at random
 	var delay: float = randf_range(0,0.05)
 	for invader in get_tree().get_nodes_in_group('invader'):
 		invader.start_game_over_dive(delay)
-		delay += randf_range(0,0.05)
+		delay += randf_range(0,0.1)

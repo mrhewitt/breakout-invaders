@@ -28,6 +28,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_mad0u")
 script = ExtResource("1_fn3g3")
+paddle_scene = ExtResource("3_fn3g3")
+invader_grid_scene = ExtResource("5_ai45w")
 explosion_scene = ExtResource("3_dqqhb")
 explosion_damage_scene = ExtResource("4_b2suy")
 death_explosion_scene = ExtResource("5_b2suy")
@@ -81,21 +83,10 @@ texture = ExtResource("5_mad0u")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="Game" type="Node" parent="."]
-process_mode = 4
-
-[node name="HUD" parent="Game" instance=ExtResource("6_4papg")]
+[node name="HUD" parent="." instance=ExtResource("6_4papg")]
 visible = false
-offset_bottom = 180.0
-
-[node name="InvaderGrid" parent="Game" instance=ExtResource("5_ai45w")]
-
-[node name="Paddle" parent="Game" instance=ExtResource("3_fn3g3")]
-visible = false
-position = Vector2(391, 1107)
-
-[node name="InvaderMoveTimer" type="Timer" parent="Game"]
-wait_time = 0.5
+layout_mode = 1
+offset_bottom = 192.0
 
 [node name="BoundryStaticBody" type="StaticBody2D" parent="."]
 collision_layer = 16
@@ -137,10 +128,7 @@ layout_mode = 1
 offset_top = -166.5
 offset_bottom = 166.5
 
-[connection signal="pause_game" from="Game/HUD" to="." method="_on_hud_pause_game"]
-[connection signal="grid_cleared" from="Game/InvaderGrid" to="." method="_on_invader_grid_grid_cleared"]
-[connection signal="row_moved_down" from="Game/InvaderGrid" to="." method="_on_invader_grid_row_moved_down"]
-[connection signal="timeout" from="Game/InvaderMoveTimer" to="." method="_on_invader_move_timer_timeout"]
+[connection signal="pause_game" from="HUD" to="." method="_on_hud_pause_game"]
 [connection signal="area_entered" from="DeathZoneArea" to="." method="_on_death_zone_area_area_entered"]
 [connection signal="body_entered" from="DeathZoneArea" to="." method="_on_death_zone_area_body_entered"]
 [connection signal="game_started" from="GameMenuContainer" to="." method="_on_game_menu_container_game_started"]

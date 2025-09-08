@@ -1,6 +1,12 @@
 extends Path2D
 class_name TrackPath
 
+# Implements a reusable Path2D node that when given a target node, spped and curve
+# will move that target node along the curve path at given speed
+# Fires a signal once path has been completly followed
+
+## Fired once path follow path_progress becomes 1
+## Argument is the velocity at which target exited the path
 signal path_complete(exit_velocity: Vector2)
 
 var path_follow: PathFollow2D
@@ -32,6 +38,10 @@ func follow_curve( _target: Node2D, _curve: Curve2D, _speed: float) -> void:
 	exit_path()
 	
 	
+# Stop path following and free resources
+# Fires the path_complete with the exit velocity
+# Called automatically when path end is reached, but can also be called at any point
+# to cause the target to stop following the path prematurely	
 func exit_path() -> void:	
 	# work out how fast we were moving to complete the path
 	# use vector of last potion of path to determine a velocity on exiting

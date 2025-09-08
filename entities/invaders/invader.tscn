@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d4m4watlueu3h" path="res://entities/invaders/bomb.tscn" id="2_nv8go"]
 [ext_resource type="Texture2D" uid="uid://csg3bu3xl2p3y" path="res://assets/invaders/invader-atlas.png" id="2_wl0cq"]
 [ext_resource type="PackedScene" uid="uid://cekiawul3bpfd" path="res://entities/pickups/coin_pickup.tscn" id="3_670jw"]
+[ext_resource type="Curve2D" uid="uid://c13f4itg0xegn" path="res://entities/invaders/death_dive_curve.tres" id="6_8lbl0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wl0cq"]
 size = Vector2(38, 29)
@@ -133,18 +134,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Curve2D" id="Curve2D_670jw"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 27, -35, 0, 0, 0, 0, 52, -62, 0, 0, 0, 0, 80, -81, 0, 0, 0, 0, 118, -90, 0, 0, 0, 0, 163, -81, 0, 0, 0, 0, 190, -50, 0, 0, 0, 0, 209, -17, 0, 0, 0, 0, 222, 11, 0, 0, 0, 0, 228, 44, 0, 0, 0, 0, 229, 72, 0, 0, 0, 0, 218, 141, 0, 0, 0, 0, 200, 211, 0, 0, 0, 0, 177, 282, 0, 0, 0, 0, 151, 342, 0, 0, 0, 0, 49, 608, 0, 0, 0, 0, -205, 1216)
-}
-point_count = 17
-
 [node name="Invader" type="StaticBody2D" groups=["invader"]]
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("1_wl0cq")
 bomb_scene = ExtResource("2_nv8go")
 coin_scene = ExtResource("3_670jw")
+death_dive_curve = ExtResource("6_8lbl0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3, 0.5)
@@ -160,7 +156,7 @@ target_position = Vector2(0, 700)
 collision_mask = 4
 
 [node name="Path2D" type="Path2D" parent="."]
-curve = SubResource("Curve2D_670jw")
+curve = ExtResource("6_8lbl0")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2(0, 8)

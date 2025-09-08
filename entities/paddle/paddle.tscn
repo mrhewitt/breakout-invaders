@@ -108,3 +108,4 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_2yb8v")
 
 [connection signal="animation_finished" from="DeathAnimation" to="." method="_on_death_animation_animation_finished"]
+[connection signal="finished" from="DeathParticles2D" to="." method="_on_death_particles_2d_finished"]

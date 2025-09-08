@@ -1,6 +1,9 @@
 extends TextureRect
 class_name TextureRectFrames
 
+# Implementsa TextureRect that contains frames in same was as a Sprite2D
+# using "frame" property you can manually alter the frame displayed 
+
 @export var frame: int = 0:
 	set(frame_in):
 		if total_frames():

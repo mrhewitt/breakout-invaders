@@ -1,14 +1,16 @@
 extends CharacterBody2D
 class_name Paddle
 
+@export_group("Settings")
 @export var speed: float = 400.0
 @export var accel: float = 20.0
 @export var deccel: float = 10.0
 
-@export_category("Launch Path Curves")
+@export_group("Launch Path Curves")
 @export var launch_curves: Array[Curve2D]
 
-@export_category("Instantiated Scenes")
+@export_group("Instantiated Scenes")
+
 @export var rocket_scene: PackedScene
 @export var damage_decal: PackedScene
 @export var explosion_scene: PackedScene
@@ -35,7 +37,8 @@ class_name Paddle
 
 func _ready() -> void:
 	GameManager.game_over.connect(_on_game_over)
-
+	global_position = Vector2( get_viewport_rect().size.x/2, 1120 )
+	
 
 func hit_by_bomb( bomb_position: Vector2 ) -> void:
 	# leave a permanent damage decal on paddle horizontally where bomb hit,
@@ -119,3 +122,8 @@ func _on_death_animation_animation_finished() -> void:
 	death_particles_2d.visible = true
 	death_particles_2d.emitting = true
 	
+
+# done with death, so free paddle which will also destroy
+# all dynamically created decals etc
+func _on_death_particles_2d_finished() -> void:
+	queue_free()

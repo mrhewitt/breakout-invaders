@@ -11,10 +11,12 @@ signal wave_complete
 
 var health: int = 6:
 	set(health_in):
-		health = clampi(health_in,0,6)
-		health_updated.emit(health)
-		if health == 0:
-			game_over.emit()
+		health_in = clampi(health_in,0,6)
+		if health != health_in:		# dont assign if same so signals are not duplicated 
+			health = health_in
+			health_updated.emit(health)
+			if health == 0:
+				game_over.emit()
 
 var score: int = 0:
 	set(score_in):
@@ -56,14 +58,14 @@ var invader_grid: InvaderGrid = null
 
 
 func new_game() -> void:
-	invader_grid.clear()
+#	invader_grid.clear()
 	score = 0
 	coins = 0
 	wave = 1
 	
 	
 func get_api_key() -> String:
-	var file_path = "res://assets/data/api_key.txt" # Adjust path as needed
+	var file_path = "res://data/api_key.txt" # Adjust path as needed
 	var file = FileAccess.open(file_path, FileAccess.READ)
 
 	if file:
