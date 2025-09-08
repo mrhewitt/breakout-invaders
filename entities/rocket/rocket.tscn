@@ -45,7 +45,7 @@ animations = [{
 radius = 6.0
 
 [node name="Rocket" type="CharacterBody2D"]
-collision_layer = 4
+collision_layer = 32
 collision_mask = 23
 script = ExtResource("1_61umk")
 left_turn_curve = ExtResource("2_c1mwr")

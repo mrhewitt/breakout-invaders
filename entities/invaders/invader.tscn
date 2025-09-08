@@ -1,10 +1,12 @@
-[gd_scene load_steps=22 format=3 uid="uid://cqyg5vqlkjgpx"]
+[gd_scene load_steps=24 format=3 uid="uid://cqyg5vqlkjgpx"]
 
 [ext_resource type="Script" uid="uid://djsf4mskthk63" path="res://entities/invaders/invader.gd" id="1_wl0cq"]
 [ext_resource type="Texture2D" uid="uid://dqd3yjxl3ydi7" path="res://assets/invaders/explosion-01.png" id="2_3mv3w"]
 [ext_resource type="PackedScene" uid="uid://d4m4watlueu3h" path="res://entities/invaders/bomb.tscn" id="2_nv8go"]
 [ext_resource type="Texture2D" uid="uid://csg3bu3xl2p3y" path="res://assets/invaders/invader-atlas.png" id="2_wl0cq"]
 [ext_resource type="PackedScene" uid="uid://cekiawul3bpfd" path="res://entities/pickups/coin_pickup.tscn" id="3_670jw"]
+[ext_resource type="PackedScene" uid="uid://qdae5kr7anp7" path="res://entities/invaders/points_label.tscn" id="4_ptc76"]
+[ext_resource type="PackedScene" uid="uid://bqidnu280rikv" path="res://entities/pickups/health_pickup.tscn" id="4_yug7f"]
 [ext_resource type="Curve2D" uid="uid://c13f4itg0xegn" path="res://entities/invaders/death_dive_curve.tres" id="6_8lbl0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wl0cq"]
@@ -140,6 +142,8 @@ collision_mask = 4
 script = ExtResource("1_wl0cq")
 bomb_scene = ExtResource("2_nv8go")
 coin_scene = ExtResource("3_670jw")
+health_scene = ExtResource("4_yug7f")
+points_label = ExtResource("4_ptc76")
 death_dive_curve = ExtResource("6_8lbl0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -148,7 +152,7 @@ shape = SubResource("RectangleShape2D_wl0cq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qc4jv")
-animation = &"invader-01"
+animation = &"invader-05"
 autoplay = "invader-01"
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

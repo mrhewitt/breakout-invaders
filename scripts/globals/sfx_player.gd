@@ -3,7 +3,10 @@ extends Node
 # list of sounds to be used with play_random, a sound will be selected at random
 # from list of options for given key
 const SFX_RANDOM = {
-
+	explosion_death = [
+		preload("res://assets/audio/explosions_large_1.ogg"),
+		preload("res://assets/audio/explosions_large_2.ogg")
+	]
 }
 
 # dictionary of single sounds to be used with play(...)
@@ -17,7 +20,9 @@ var SFX = {
 	explosion_tiny = preload("res://assets/audio/explosions_tiny_1.ogg"),
 	explosion_invader = preload("res://assets/audio/Balloon_Pop-002.wav"),
 	rocket_launch = preload("res://assets/audio/rocket_1.ogg"),
-	drop_bomb = preload("res://assets/audio/Bottle_POP-001.wav")
+	drop_bomb = preload("res://assets/audio/Bottle_POP-001.wav"),
+	count_coin = preload("res://assets/audio/Positive_Button_Collect_-007.wav"),
+	highscore = preload("res://assets/audio/Winning_Jingle-003.wav")
 }
 
 func play( sound_key: String ) -> void:

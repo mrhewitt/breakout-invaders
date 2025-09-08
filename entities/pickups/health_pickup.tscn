@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqidnu280rikv"]
+
+[ext_resource type="PackedScene" uid="uid://cllg2tqqw6ydt" path="res://entities/pickups/pickup.tscn" id="1_2x38h"]
+[ext_resource type="Script" uid="uid://ml5tqug0mokv" path="res://entities/pickups/health_pickup.gd" id="2_i1qn2"]
+
+[node name="HealthPickup" instance=ExtResource("1_2x38h")]
+script = ExtResource("2_i1qn2")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+animation = &"health"
+frame_progress = 0.0

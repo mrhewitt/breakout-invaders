@@ -10,12 +10,15 @@ signal grid_cleared
 
 const INVADER = preload("res://entities/invaders/invader.tscn")
 
+const INVADER_TOP_ROW_Y = 400
 const DISPLAY_WIDTH = 720
 
 const COLUMN_SPACING = 64
 const ROW_SPACING = 48
-const COLUMN_COUNT  = 10
-const ROW_COUNT = 8
+const START_COLUMN_COUNT  = 6
+const START_ROW_COUNT = 5
+const MAX_ROWS = 8
+const MAX_COLUMNS = 10
 
 const LEFT_MOTION_MARGIN = 32
 const RIGHT_MOTION_MARGIN = 32
@@ -24,7 +27,7 @@ const SHUFFLE_DOWN_STEPS = 8
 
 enum ShuffleDirection {LEFT, RIGHT, DOWN}
 
-@onready var margin_x: int = (720 - ((COLUMN_COUNT-1)*COLUMN_SPACING)) / 2
+@onready var margin_x: int = (720 - ((MAX_COLUMNS-1)*COLUMN_SPACING)) / 2
 @onready var invader_move_timer: Timer = $InvaderMoveTimer
 
 var direction: ShuffleDirection = ShuffleDirection.RIGHT
@@ -72,7 +75,7 @@ func shuffle() -> void:
 	# if all invaders are destroyed flag wave is over, we do it in shuffle not immediatly
 	# on last invader destroyed to add a very slight delay effect to make it more natural
 	if invaders.size() == 0:
-		GameManager.wave_complete.emit(0)
+		GameManager.wave_complete.emit()
 		wait_to_clear_grid = true
 		return
 		
@@ -104,13 +107,31 @@ func clear() -> void:
 
 
 func create_invaders() -> void:
+	var row_count = START_ROW_COUNT
+	var column_count = START_COLUMN_COUNT
+	
+	# increase number of columns/rows depending on wave number
+	# first few waves just add columns, once we reach max columns
+	# further waves will add entire rows of invaders
+	for i in range(0,GameManager.wave-1):
+		if column_count < MAX_COLUMNS:
+			column_count += 1
+		elif row_count < MAX_ROWS:
+			row_count += 1 
+	
 	clear()
-	for row in range(0,ROW_COUNT):
-		for column in range(0,COLUMN_COUNT):
+	# add progressively harder aliens as waves progress, top row is always
+	# hardest down to easiest, so on wave 1, only idx 0 (easy) aliens,
+	# but if was is two invder index starts at 1, so we produce one row
+	# of more difficult alient types
+	var invader_idx: int = GameManager.wave - 1
+	for row in range(0,row_count):
+		for column in range(0,column_count):
 			var invader = INVADER.instantiate()
 			add_child(invader)
-			invader.invader_index = 0
-			invader.global_position = Vector2(margin_x + (column*COLUMN_SPACING),300 + (ROW_SPACING*row))
+			invader.invader_index = invader_idx
+			invader.global_position = Vector2(margin_x + (column*COLUMN_SPACING),INVADER_TOP_ROW_Y + (ROW_SPACING*row))
+		invader_idx = maxi(invader_idx-1,0)
 
 
 func _on_game_over() -> void:

@@ -18,6 +18,7 @@ func _ready() -> void:
 	
 func play_explosion( idx : int ) -> void:
 	await get_tree().create_timer( randf_range(0,0.5) ) 
+	SfxPlayer.play_random('explosion_death')
 	var sprite = AnimatedSprite2D.new()
 	sprite.sprite_frames = explosion_animation
 	sprite.global_position = Vector2( idx*128, randf_range(viewport_size.y-100, viewport_size.y-64))

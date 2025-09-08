@@ -16,13 +16,13 @@ extends Control
 @onready var base_background: TextureRect = $BaseBackground
 
 var invader_grid: InvaderGrid = null
+var is_game_over: bool = false
 
 
 func _ready() -> void:
 	GameManager.load_high_scores()
-	#GameManager.health_updated.connect(check_health)
 	GameManager.game_over.connect(_on_game_over)
-	#GameManager.invader_grid = invader_grid
+	GameManager.wave_complete.connect(_on_wave_complete)
 	
 	# create an area to mirror staticbody bounds 
 	# we do this because rocket needs to enter the staticbody
@@ -56,6 +56,8 @@ func next_wave() -> void:
 	
 
 func start_game_wave() -> void:
+	is_game_over = false
+	
 	var paddle = paddle_scene.instantiate()
 	add_child(paddle)
 	
@@ -65,7 +67,13 @@ func start_game_wave() -> void:
 	GameManager.invader_grid.create_invaders()
 
 
+func _on_wave_complete() -> void:
+	is_game_over = false
+
+
 func _on_game_over() -> void:	
+	is_game_over = true
+
 	# create a series of explosions destroying base
 	var death_instance = death_explosion_scene.instantiate()
 	death_instance.explosions_finished.connect(_on_death_explosions_complete)
@@ -76,7 +84,7 @@ func _on_game_over() -> void:
 	tween.tween_property(base_background,'modulate:a',0,0.5)
 	
 	# remove damage decals so they are not left over at end
-	for child in base_background.get_children():
+	for child in get_tree().get_nodes_in_group("decals"):
 		child.queue_free()
 	
 	
@@ -106,19 +114,24 @@ func _on_game_menu() -> void:
 
 # body - the ball =>  so take player health
 func _on_death_zone_area_body_entered(body: Node2D) -> void:
-	GameManager.health -= 1
+	# destroy rocket causing the explosion 
+	body.queue_free()
 	
+	# add a damage decal and create an explosion
 	SfxPlayer.play("explosion_mid")
 	var explosion_damage = explosion_damage_scene.instantiate()
 	explosion_damage.global_position = body.global_position + Vector2(0,8)
-	base_background.add_child(explosion_damage)
+	add_child(explosion_damage)
 	
-	var explosion = explosion_scene.instantiate()
+	var explosion:AnimatedSprite2D = explosion_scene.instantiate()
 	explosion.global_position = body.global_position
 	add_child(explosion)
 	
-	body.queue_free()
-	
+	# destroy the rocket and take off some health, but wait for explosion
+	# to finish animating so there is a little delay between last hit and game over
+	await explosion.animation_finished
+	GameManager.health -= 1
+
 
 # area - powerups => so just remove
 func _on_death_zone_area_area_entered(area: Area2D) -> void:
@@ -132,4 +145,7 @@ func _on_boundry_area_body_exited(body: Node2D) -> void:
 
 func _on_invader_grid_grid_cleared() -> void:
 	hud.visible = false
-	game_over_container.game_over()
+	if is_game_over:
+		game_over_container.game_over()
+	else:
+		game_over_container.wave_complete()

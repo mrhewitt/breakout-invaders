@@ -79,6 +79,7 @@ screenshot={
 2d_physics/layer_3="Invaders"
 2d_physics/layer_4="Pickups"
 2d_physics/layer_5="Ball Bounds"
+2d_physics/layer_6="Rocket"
 
 [maaacks_credits_scene]
 

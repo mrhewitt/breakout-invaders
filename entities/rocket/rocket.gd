@@ -22,7 +22,7 @@ func _ready() -> void:
 
 
 func launch_along( launch_curve: Curve2D ) -> void:
-	start_path_follow(launch_curve, speed/2)
+	start_path_follow(launch_curve, speed*1.5)
 	
 	
 # game or wave is over, so fade rocket out so level ends neatly
@@ -51,13 +51,21 @@ func process_collision(collision: KinematicCollision2D) -> void:
 		
 		if target.is_in_group("invader"):
 			target.damage(1)
-			velocity = target_velocity
+			velocity = target_velocity * 1.2
 			exit_path_follow()
 		elif target.is_in_group("paddle"):
 			# if we hit paddle do a normal bounce, so velocity moves immediatly to target
-			velocity = target_velocity
+			velocity = target_velocity * 1.5
 			exit_path_follow()
 		else:
+			# disabled code that used a curve to turn the rocket
+			# when bouncing, this looks cool but doesnt play well, feels off
+			# and not break-out like, so for now to improve playability going
+			# back to doing a regular bounce
+			velocity = target_velocity
+			return
+			
+			# disabled for now
 			if path_to_track == null:
 				var curve = left_turn_curve
 				if normal.y == 1:
@@ -68,9 +76,9 @@ func process_collision(collision: KinematicCollision2D) -> void:
 						curve = right_turn_curve
 				elif velocity.y < 0:
 					curve = right_turn_curve
-				start_path_follow(curve, speed)
-	
-				
+				start_path_follow(curve, speed * 1.2)
+
+
 func turn_around() -> void:
 	start_path_follow(left_turn_curve, speed)
 
@@ -89,7 +97,8 @@ func exit_path_follow() -> void:
 
 func _on_path_follow_complete( exit_velocity: Vector2 ) -> void:
 	velocity = exit_velocity
-	target_velocity = velocity
+	# move towards are default velocity if we were moving faster in path
+	target_velocity = velocity.normalized() * speed
 	path_to_track = null
 	# only activate paddle collision make on path complete, this has effect
 	# only launch, as we dont want paddle to bump rocket as it launches

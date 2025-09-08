@@ -10,16 +10,11 @@ class_name Paddle
 @export var launch_curves: Array[Curve2D]
 
 @export_group("Instantiated Scenes")
-
 @export var rocket_scene: PackedScene
 @export var damage_decal: PackedScene
 @export var explosion_scene: PackedScene
 
-
-#@export_category("Oscillator")
-#@export var spring: float = 180.0
-#@export var damp: float = 7.0
-#@export var velocity_multiplier: float = 0.5
+@onready var viewport_size: Vector2 = get_viewport_rect().size 
 
 @onready var launch_point_markers = [
 	$LaunchPointLeftMarker,
@@ -28,11 +23,6 @@ class_name Paddle
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var death_animation: AnimatedSprite2D = $DeathAnimation
 @onready var death_particles_2d: GPUParticles2D = $DeathParticles2D
-
-
-## Osicllator
-#var displacement: float = 0
-#var oscillator_velocity: float = 0
 
 
 func _ready() -> void:
@@ -72,14 +62,6 @@ func _process(delta: float) -> void:
 		velocity.x = lerp(velocity.x, dir * speed, accel * delta)
 	else:
 		velocity.x = lerp(velocity.x, 0.0, deccel * delta)
-	
-	# damping oscillator rotation
-	#oscillator_velocity += (velocity.x / speed) * velocity_multiplier
-	#var force = -spring * displacement + damp * oscillator_velocity
-	#oscillator_velocity -= force * delta
-	#displacement -= oscillator_velocity * delta
-	
-	#sprite_2d.rotation = -displacement	
 
 	
 func _physics_process(delta: float) -> void:	
@@ -87,7 +69,18 @@ func _physics_process(delta: float) -> void:
 
 
 func launch_rocket() -> void:
+	# determine which side of paddle rocker will launch from
+	# if we are far on one side of screen, always use launcher
+	# on opposite side, otherwise its random
 	var on_left_side: bool =  randi_range(0,100) < 50
+	var screen_quarter = viewport_size.x/4
+	# we are on left edge, so use right side launcher
+	if global_position.x < screen_quarter:
+		on_left_side = false
+	# on right hand edge, use left hand launcher
+	if global_position.x > viewport_size.x-screen_quarter:
+		on_left_side = true
+		
 	var rocket = rocket_scene.instantiate()
 	var launch_position = ($LaunchPointLeftMarker if on_left_side else $LaunchPointRightMarker).global_position
 	var curve = launch_curves.pick_random()
@@ -112,6 +105,7 @@ func flip_curve(curve: Curve2D) -> Curve2D:
 
 
 func _on_game_over() -> void:
+	set_process(false)
 	sprite_2d.visible = false
 	death_animation.visible = true
 	death_animation.play("default")

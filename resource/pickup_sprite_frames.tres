@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://cahmkghlkha41"]
+[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://cahmkghlkha41"]
 
 [ext_resource type="Texture2D" uid="uid://caa8kkcvc2w6l" path="res://assets/invaders/pickups.png" id="1_3j3mk"]
 
@@ -26,6 +26,14 @@ region = Rect2(128, 0, 32, 32)
 atlas = ExtResource("1_3j3mk")
 region = Rect2(160, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3j3mk"]
+atlas = ExtResource("1_3j3mk")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60nac"]
+atlas = ExtResource("1_3j3mk")
+region = Rect2(32, 96, 32, 32)
+
 [resource]
 animations = [{
 "frames": [{
@@ -50,4 +58,15 @@ animations = [{
 "loop": true,
 "name": &"coin",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3j3mk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60nac")
+}],
+"loop": true,
+"name": &"health",
+"speed": 5.0
 }]

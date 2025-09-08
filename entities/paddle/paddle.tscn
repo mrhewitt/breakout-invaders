@@ -1,12 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://n2fd74tuta5f"]
+[gd_scene load_steps=19 format=3 uid="uid://n2fd74tuta5f"]
 
 [ext_resource type="Texture2D" uid="uid://vaax8jkrgh8f" path="res://assets/player/paddle.png" id="1_d472v"]
 [ext_resource type="Script" uid="uid://b2ovkg7dgw1lt" path="res://entities/paddle/paddle.gd" id="1_frr1j"]
 [ext_resource type="Curve2D" uid="uid://dngi2bnw4843i" path="res://entities/paddle/launch_curve_1.tres" id="2_iktsf"]
 [ext_resource type="Curve2D" uid="uid://br73058racn7y" path="res://entities/paddle/launch_curve_2.tres" id="3_s8q8v"]
 [ext_resource type="Curve2D" uid="uid://b3sr0c8p682hd" path="res://entities/paddle/launch_curve_3.tres" id="4_4ki4k"]
-[ext_resource type="Curve2D" uid="uid://c0n2r1o74ffvg" path="res://entities/paddle/launch_curve_4.tres" id="5_2yb8v"]
-[ext_resource type="Curve2D" uid="uid://xvv7khelxacr" path="res://entities/paddle/launch_curve_5.tres" id="6_muqxf"]
 [ext_resource type="PackedScene" uid="uid://cdjtobxnjq0hx" path="res://entities/rocket/rocket.tscn" id="7_txo32"]
 [ext_resource type="PackedScene" uid="uid://lru0hqa0ph35" path="res://entities/paddle/damage_decal.tscn" id="8_a2ii2"]
 [ext_resource type="PackedScene" uid="uid://cc8gd0akktupn" path="res://entities/paddle/bomb_explosion.tscn" id="9_0g66u"]
@@ -71,7 +69,7 @@ gravity = Vector3(0, 98, 0)
 [node name="Paddle" type="CharacterBody2D" groups=["paddle"]]
 collision_mask = 16
 script = ExtResource("1_frr1j")
-launch_curves = Array[Curve2D]([ExtResource("2_iktsf"), ExtResource("3_s8q8v"), ExtResource("4_4ki4k"), ExtResource("5_2yb8v"), ExtResource("6_muqxf")])
+launch_curves = Array[Curve2D]([ExtResource("2_iktsf"), ExtResource("3_s8q8v"), ExtResource("4_4ki4k")])
 rocket_scene = ExtResource("7_txo32")
 damage_decal = ExtResource("8_a2ii2")
 explosion_scene = ExtResource("9_0g66u")

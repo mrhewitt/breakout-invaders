@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://c2xlanqdypmdo" path="res://ui/pause_container.tscn" id="13_ocfjn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fyhu2"]
-size = Vector2(996, 180)
+size = Vector2(717, 57)
 
 [node name="World" type="Control"]
 layout_mode = 3
@@ -47,14 +47,14 @@ stretch_mode = 1
 
 [node name="CityBackground" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -478.0
-offset_bottom = -286.0
+anchor_bottom = 0.5
+offset_top = 239.0
+offset_bottom = 352.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 texture = ExtResource("2_mmdvd")
 stretch_mode = 1
 
@@ -90,17 +90,17 @@ offset_bottom = 192.0
 
 [node name="BoundryStaticBody" type="StaticBody2D" parent="."]
 collision_layer = 16
-collision_mask = 5
+collision_mask = 33
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoundryStaticBody"]
 polygon = PackedVector2Array(772, -3, 772, 1171, 713, 1171, 713, 194, 8, 193, 8, 1166, -58, 1166, -58, -1)
 
 [node name="DeathZoneArea" type="Area2D" parent="."]
 collision_layer = 2
-collision_mask = 4
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZoneArea"]
-position = Vector2(488, 1262)
+position = Vector2(360.5, 1200.5)
 shape = SubResource("RectangleShape2D_fyhu2")
 debug_color = Color(0.7, 0, 0.196875, 0.42)
 
@@ -127,6 +127,7 @@ visible = false
 layout_mode = 1
 offset_top = -166.5
 offset_bottom = 166.5
+mouse_filter = 0
 
 [connection signal="pause_game" from="HUD" to="." method="_on_hud_pause_game"]
 [connection signal="area_entered" from="DeathZoneArea" to="." method="_on_death_zone_area_area_entered"]

@@ -22,6 +22,8 @@ const INVADERS = [
 @export_group("Instantiated Scenes")
 @export var bomb_scene: PackedScene
 @export var coin_scene: PackedScene
+@export var health_scene: PackedScene
+@export var points_label: PackedScene
 
 @export_group("Curves")
 @export var death_dive_curve: Curve2D
@@ -43,12 +45,25 @@ func damage(amount: int) -> void:
 	if hit_points:
 		hit_points -= amount
 		if hit_points <= 0:
-			GameManager.score += points
+			GameManager.score += points			
+			spawn_points_label()
+			
 			SfxPlayer.play("explosion_invader")
 			animated_sprite_2d.play('death')
 			await animated_sprite_2d.animation_finished
 			queue_free()
+		else:
+			modulate = Color.RED
+			var tween = create_tween()
+			tween.tween_property(self,"modulate", Color.WHITE,1)
 
+
+func spawn_points_label() -> void:
+	var label = points_label.instantiate()
+	get_parent().add_child(label)
+	label.global_position = global_position
+	label.points = points
+	
 
 func spawn_coin() -> bool:
 	if is_bottom_most() and GameManager.coins_left_in_wave > 0:
@@ -71,10 +86,15 @@ func shuffle( direction: InvaderGrid.ShuffleDirection ) -> void:
 				delta_y = shuffle_speed
 	
 	if is_bottom_most():
+		# one percent chance of a bomb
 		if randi_range(0,100) == 5:
 			spawn_pickup(bomb_scene)
+		# 1 in 500 of a coin	
 		elif randi_range(0,500) == 5:
 			spawn_coin()
+		# 1 in 500 of health
+		elif randi_range(0,500) == 5:
+			spawn_pickup(health_scene)
 
 
 func _physics_process(delta: float) -> void:
