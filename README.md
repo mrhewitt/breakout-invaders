@@ -6,6 +6,8 @@ See it in action on Itch.io:  [Breakout Invaders](https://daddio-dragonslayer.it
 
 <p align="center">
   <img height="320" src="https://res.cloudinary.com/dbgabg3vb/image/upload/v1757410862/Breakout_Invaders_2025_09_09_11_39_52_y8ecmi.png" />
+  <img height="320" src="https://img.itch.zone/aW1hZ2UvMzg3MDcwMy8yMzEwNzkzNy5wbmc=/original/SuhRrc.png" />
+  <img height="320" src="https://img.itch.zone/aW1hZ2UvMzg3MDcwMy8yMzEwMDYxMS5wbmc=/original/rZwxJ1.png" />
 </p>
 
 
