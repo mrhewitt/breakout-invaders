@@ -129,6 +129,7 @@ func coin_counting_complete() -> void:
 func start_high_score_entry() -> void:
 	if GameManager.makes_highscore_list(score):
 		SfxPlayer.play('highscore')
+		name_text_edit.placeholder_text = HighScoreManager.get_random_player_name()
 		top_score_v_box_container.visible = true
 	else:
 		enable_ui_buttons()
@@ -221,5 +222,7 @@ func _on_save_score_button_pressed() -> void:
 	saving_label.visible = true
 	# save addition to high score list, we use score NOT highscore as we may have
 	# made the list somewhere in top 10, but not neccesariy the top score
+	if name_text_edit.text.strip_edges() == "":
+		name_text_edit.text = name_text_edit.placeholder_text 
 	GameManager.save_high_score( name_text_edit.text, score )
 	

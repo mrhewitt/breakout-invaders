@@ -9,11 +9,15 @@ const INVADERS = [
 	{hitpoints = 3, points = 250}
 ]
 
+# outcome of taking damage
+# NULL is sent when invader is dying, i..e nullify the bounce
+enum DamageResult { KILL, KNOCK, NULL}
 
 @export_group("Settings")
 @export var shuffle_speed: float = 300
 @export var invader_index: int = 0:
 	set(idx):
+		idx = clampi(idx,0,INVADERS.size()-1)
 		hit_points = INVADERS[idx].hitpoints
 		points = INVADERS[idx].points
 		animated_sprite_2d.animation = "invader-0" + str(idx+1)
@@ -41,28 +45,40 @@ var points : int = 0
 var death_dive_track: TrackPath = null
 
 
-func damage(amount: int) -> void:
+# returns true if invaders is killed by this call
+func damage(amount: int) -> DamageResult:
 	if hit_points:
 		hit_points -= amount
 		if hit_points <= 0:
-			GameManager.score += points			
-			spawn_points_label()
-			
-			SfxPlayer.play("explosion_invader")
-			animated_sprite_2d.play('death')
-			await animated_sprite_2d.animation_finished
-			queue_free()
+			# dead, but defer call to kill as it is async, and we want this
+			# method to return true/false right now
+			kill_invader.call_deferred()
+			return DamageResult.KILL
 		else:
 			modulate = Color.RED
 			var tween = create_tween()
 			tween.tween_property(self,"modulate", Color.WHITE,1)
+			return DamageResult.KNOCK
+				
+	return DamageResult.NULL
+	
+	
+func kill_invader() -> void:
+	var final_points: int = points * GameManager.score_multiplier
+	GameManager.score += final_points
+	spawn_points_label(final_points)
+	
+	SfxPlayer.play("explosion_invader")
+	animated_sprite_2d.play('death')
+	await animated_sprite_2d.animation_finished
+	queue_free()
+	
 
-
-func spawn_points_label() -> void:
+func spawn_points_label( points_to_show: int ) -> void:
 	var label = points_label.instantiate()
 	get_parent().add_child(label)
 	label.global_position = global_position
-	label.points = points
+	label.points = points_to_show
 	
 
 func spawn_coin() -> bool:

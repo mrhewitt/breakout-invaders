@@ -6,6 +6,17 @@ signal high_score_updated(high_score: int)
 signal coins_updated(coins: int)
 signal wave_updated(wave: int)
 signal top_player_updated(top_player: Dictionary)
+
+
+## Emitted when rocket kills severl invaders in a row
+signal kill_combo_reached(event_position: Vector2, combo: int)
+
+## Emitted when rocket knocks several invaders in a row
+signal invader_combo_reached(event_position: Vector2, combo: int)
+
+## Emitted when a new score mulitplier is computed
+signal score_multiplier_updated( score_mulitplier: float )
+
 signal game_over
 signal wave_complete
 
@@ -42,6 +53,7 @@ var wave: int = 1:
 		# get one more coin than current wave number every wave,
 		# so 2 coins in wave 1, 3 coins in wave 2 etc etc
 		coins_left_in_wave = wave + 1
+		compute_score_multiplier()
 		
 var top_player: Dictionary:
 	set(top):
@@ -53,6 +65,10 @@ var high_score_list: Array[Dictionary] = [{name="Bob",score=10223},{name="Adian1
 # tracks number of coins that can still be spawned in the current wave
 # dec this each time a coin is dropped
 var coins_left_in_wave: int = 0
+
+# current multipler in effect
+# we give a .5 bonus for each rocket in the air over out base one 
+var score_multiplier: float = 1
 
 # main container for all invders,rockets,bombs, etc
 var invader_grid: InvaderGrid = null
@@ -77,6 +93,13 @@ func new_game() -> void:
 	score = 0
 	coins = 0
 	wave = 1
+	score_multiplier = 1
+	
+	
+func compute_score_multiplier() -> void:
+	var rockets_in_air: int = get_tree().get_node_count_in_group('rocket')
+	score_multiplier = 1 + ( max(0,rockets_in_air-1) * 0.5)
+	score_multiplier_updated.emit(score_multiplier)
 	
 	
 func get_api_key() -> String:

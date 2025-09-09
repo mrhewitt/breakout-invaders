@@ -11,9 +11,11 @@ config_version=5
 [application]
 
 config/name="Breakout Invaders"
+config/version="0.9"
 run/main_scene="uid://gmlielrkjsvt"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="uid://btfiou6ydllpv"
+config/windows_native_icon="res://GameIcon.ico"
 
 [audio]
 
@@ -25,6 +27,7 @@ SfxPlayer="*res://scripts/globals/sfx_player.gd"
 GameManager="*res://scripts/globals/game_manager.gd"
 MusicPlayer="*res://scripts/globals/music_player.gd"
 Screenshot="*res://scripts/globals/screenshot.gd"
+HighScoreManager="*res://scripts/globals/high_score_manager.gd"
 
 [display]
 
@@ -45,6 +48,7 @@ enabled=PackedStringArray("res://addons/maaacks_credits_scene/plugin.cfg")
 invader=""
 paddle=""
 decals=""
+rocket=""
 
 [input]
 
@@ -94,5 +98,4 @@ copy_path="res://ui/"
 [rendering]
 
 renderer/rendering_method="mobile"
-renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true

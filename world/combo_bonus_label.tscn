@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dngp7de2dk4i6"]
+
+[ext_resource type="Script" uid="uid://de8tiyqxk1mkx" path="res://world/combo_bonus_label.gd" id="1_0fpku"]
+[ext_resource type="LabelSettings" uid="uid://dl0wk4rdbshkb" path="res://resource/combo_label_settings.tres" id="2_0seer"]
+
+[node name="ComboBonusLabel" type="Label"]
+label_settings = ExtResource("2_0seer")
+script = ExtResource("1_0fpku")

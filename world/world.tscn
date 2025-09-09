@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://gmlielrkjsvt"]
+[gd_scene load_steps=19 format=3 uid="uid://gmlielrkjsvt"]
 
 [ext_resource type="Texture2D" uid="uid://fdrplw3a8h4l" path="res://assets/background/SpaceInvaders_Background.png" id="1_6xmxd"]
 [ext_resource type="Script" uid="uid://dhp0td1arxkwt" path="res://world/world.gd" id="1_fn3g3"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://eftmh7rmacfv" path="res://world/death_explosion.tscn" id="5_b2suy"]
 [ext_resource type="Texture2D" uid="uid://dpju5vfr8v5kr" path="res://assets/background/base.png" id="5_mad0u"]
 [ext_resource type="PackedScene" uid="uid://rto7lxxjwb0i" path="res://ui/hud.tscn" id="6_4papg"]
+[ext_resource type="PackedScene" uid="uid://qdae5kr7anp7" path="res://entities/invaders/points_label.tscn" id="8_ysn08"]
+[ext_resource type="PackedScene" uid="uid://dngp7de2dk4i6" path="res://world/combo_bonus_label.tscn" id="9_m0cxt"]
 [ext_resource type="PackedScene" uid="uid://7caf5r6l7cj4" path="res://ui/top_players_container.tscn" id="11_mad0u"]
 [ext_resource type="PackedScene" uid="uid://c421k7ke8tl76" path="res://ui/game_menu_container.tscn" id="11_ov2xu"]
 [ext_resource type="PackedScene" uid="uid://b73nxmjliu1xo" path="res://ui/game_over_container.tscn" id="12_mad0u"]
@@ -34,6 +36,7 @@ invader_grid_scene = ExtResource("5_ai45w")
 explosion_scene = ExtResource("3_dqqhb")
 explosion_damage_scene = ExtResource("4_b2suy")
 death_explosion_scene = ExtResource("5_b2suy")
+points_label_scene = ExtResource("8_ysn08")
 
 [node name="StarsBackground" type="TextureRect" parent="."]
 layout_mode = 1
@@ -90,6 +93,44 @@ stretch_mode = 5
 visible = false
 layout_mode = 1
 offset_bottom = 192.0
+
+[node name="ScoreBonusLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -116.0
+offset_top = -1060.0
+offset_right = 175.0
+offset_bottom = -1029.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.63916, 0.929688, 0.82074, 0.760784)
+theme_override_colors/font_outline_color = Color(0.0550842, 0.371094, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 24
+text = "SCORE BONUS x 2"
+
+[node name="ComboBonusLabel" parent="." instance=ExtResource("9_m0cxt")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -1005.0
+offset_right = 88.0
+offset_bottom = -979.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Combo Bonus"
 
 [node name="BoundryStaticBody" type="StaticBody2D" parent="."]
 collision_layer = 16

@@ -8,6 +8,7 @@ const BASE_DISPLAY_HEIGHT: float = 1280
 @export var explosion_scene: PackedScene
 @export var explosion_damage_scene: PackedScene
 @export var death_explosion_scene: PackedScene
+@export var points_label_scene: PackedScene
 
 @onready var pause_container: MarginContainer = $PauseContainer
 @onready var hud: MarginContainer = $HUD
@@ -17,15 +18,21 @@ const BASE_DISPLAY_HEIGHT: float = 1280
 @onready var boundry_static_body: StaticBody2D = $BoundryStaticBody
 @onready var death_zone_area: Area2D = $DeathZoneArea
 @onready var base_background: TextureRect = $BaseBackground
+@onready var score_bonus_label: Label = %ScoreBonusLabel
+@onready var combo_bonus_label: Label = %ComboBonusLabel
 
 var invader_grid: InvaderGrid = null
 var is_game_over: bool = false
+var paddle: Paddle = null
 
 
 func _ready() -> void:
 	GameManager.load_high_scores()
 	GameManager.game_over.connect(_on_game_over)
 	GameManager.wave_complete.connect(_on_wave_complete)
+	GameManager.score_multiplier_updated.connect(_on_score_multiplier)
+	GameManager.invader_combo_reached.connect(_on_invader_combo)
+	GameManager.kill_combo_reached.connect(_on_kill_combo)
 	
 	# expand margin at top of the game if we are on a mobile device
 	# this then automatically takes safe area into account, as well as removing
@@ -72,9 +79,9 @@ func next_wave() -> void:
 	
 
 func start_game_wave() -> void:
-	is_game_over = false
+	is_game_over = false	
 	
-	var paddle = paddle_scene.instantiate()
+	paddle = paddle_scene.instantiate()
 	add_child(paddle)
 	
 	GameManager.invader_grid = invader_grid_scene.instantiate()
@@ -149,6 +156,7 @@ func _on_death_zone_area_body_entered(body: Node2D) -> void:
 	# to finish animating so there is a little delay between last hit and game over
 	await explosion.animation_finished
 	GameManager.health -= 1
+	GameManager.compute_score_multiplier()
 
 
 # area - powerups => so just remove
@@ -162,8 +170,31 @@ func _on_boundry_area_body_exited(body: Node2D) -> void:
 
 
 func _on_invader_grid_grid_cleared() -> void:
-	hud.visible = false
 	if is_game_over:
+		hud.visible = false
 		game_over_container.game_over()
 	else:
+		paddle.queue_free()
 		game_over_container.wave_complete()
+
+
+func _on_score_multiplier(score_multiplier: float) -> void:
+	score_bonus_label.text = "SCORE BONUS x " + str(score_multiplier)
+	score_bonus_label.visible = score_multiplier > 1
+	
+	
+func _on_invader_combo(event_position: Vector2, combo: int) -> void:
+	combo_bonus_label.show_bonus("knock combo bonus")
+	show_points_label(event_position,250)
+	
+	
+func _on_kill_combo(event_position: Vector2, combo: int) -> void:
+	combo_bonus_label.show_bonus("kill combo bonus")
+	show_points_label(event_position,500)
+
+
+func show_points_label(event_position: Vector2, points: int) -> void:
+	var label = points_label_scene.instantiate()
+	add_child(label)
+	label.points = points
+	label.global_position = event_position
