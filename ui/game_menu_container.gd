@@ -1,7 +1,7 @@
 extends MarginContainer
 
 signal game_started
-signal top_scores
+signal top_scores(player_name: String)
 
 @onready var top_player_score: Label = %TopPlayerScore
 
@@ -35,4 +35,4 @@ func show_top_player(top_player: Dictionary) -> void:
 
 func _on_top_scores_button_pressed() -> void:
 	visible = false
-	top_scores.emit()
+	top_scores.emit("")

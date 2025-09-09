@@ -41,7 +41,7 @@ func _ready() -> void:
 	GameManager.game_over.connect(_on_game_over)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	# wait until all children in grid are gone, this means entites in level
 	# have finished their ending animation, so we can move on to shwo 
@@ -130,7 +130,9 @@ func create_invaders() -> void:
 			var invader = INVADER.instantiate()
 			add_child(invader)
 			invader.invader_index = invader_idx
-			invader.global_position = Vector2(margin_x + (column*COLUMN_SPACING),INVADER_TOP_ROW_Y + (ROW_SPACING*row))
+			# also shift grid down to compensate for taller mobile resolutions
+			# and safe space at top (keeps playing field same height for all platforms)
+			invader.global_position = Vector2(margin_x + (column*COLUMN_SPACING),INVADER_TOP_ROW_Y + (ROW_SPACING*row) + GameManager.safe_margin)
 		invader_idx = maxi(invader_idx-1,0)
 
 

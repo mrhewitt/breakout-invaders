@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Paddle
 
+const ACCELEROMETER_SPEED: float = 400.0
+
 @export_group("Settings")
 @export var speed: float = 400.0
 @export var accel: float = 20.0
@@ -24,10 +26,15 @@ class_name Paddle
 @onready var death_animation: AnimatedSprite2D = $DeathAnimation
 @onready var death_particles_2d: GPUParticles2D = $DeathParticles2D
 
+var use_accelerometer: bool = false
+
 
 func _ready() -> void:
+	use_accelerometer = GameManager.is_on_mobile()
+	speed = ACCELEROMETER_SPEED
+	
 	GameManager.game_over.connect(_on_game_over)
-	global_position = Vector2( get_viewport_rect().size.x/2, 1120 )
+	global_position = Vector2( get_viewport_rect().size.x/2, 1120 + GameManager.safe_margin )
 	
 
 func hit_by_bomb( bomb_position: Vector2 ) -> void:
@@ -48,14 +55,22 @@ func hit_by_bomb( bomb_position: Vector2 ) -> void:
 	GameManager.health -= 1
 	
 
+func _unhandled_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("fire_action"):
+		launch_rocket()
+
+
 func _process(delta: float) -> void:	
 	var dir: float = 0
 	if Input.is_action_pressed("move_left"):
 		dir = -1
 	if Input.is_action_pressed("move_right"):
 		dir = 1	
-	if Input.is_action_just_pressed("fire_action"):
-		launch_rocket()
+		
+	if use_accelerometer:
+		dir = Input.get_accelerometer().y
+		print("Accelerometer: " + str(dir))
+	#	velocity.x = mobile_input.x * ACCELEROMETER_SPEED	
 		
 	# smoothen the movement
 	if dir != 0:

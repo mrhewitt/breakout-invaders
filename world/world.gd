@@ -1,5 +1,7 @@
 extends Control
 
+const BASE_DISPLAY_HEIGHT: float = 1280
+
 @export_category("Instantiated Scenes")
 @export var paddle_scene: PackedScene
 @export var invader_grid_scene: PackedScene
@@ -13,6 +15,7 @@ extends Control
 @onready var game_over_container: MarginContainer = $GameOverContainer
 @onready var top_players_container: MarginContainer = $TopPlayersContainer
 @onready var boundry_static_body: StaticBody2D = $BoundryStaticBody
+@onready var death_zone_area: Area2D = $DeathZoneArea
 @onready var base_background: TextureRect = $BaseBackground
 
 var invader_grid: InvaderGrid = null
@@ -24,6 +27,19 @@ func _ready() -> void:
 	GameManager.game_over.connect(_on_game_over)
 	GameManager.wave_complete.connect(_on_wave_complete)
 	
+	# expand margin at top of the game if we are on a mobile device
+	# this then automatically takes safe area into account, as well as removing
+	# gap at bottom, the game is designed to run at a 1280 resolution, and does
+	# not scale up, or invaders would have more space and game would be easier
+	if GameManager.is_on_mobile():
+		GameManager.safe_margin = get_viewport_rect().size.y - BASE_DISPLAY_HEIGHT
+		if GameManager.safe_margin > 0:
+			# move hud down
+			hud.add_theme_constant_override('margin_top', GameManager.safe_margin)
+			# move all bounds dow
+			boundry_static_body.global_position.y += GameManager.safe_margin
+			death_zone_area.global_position.y += GameManager.safe_margin
+			
 	# create an area to mirror staticbody bounds 
 	# we do this because rocket needs to enter the staticbody
 	# doing its turn, so we cannot do move_and_collide when turning
@@ -100,8 +116,8 @@ func _on_game_menu_container_game_started() -> void:
 	new_game()
 
 
-func _on_game_menu_container_top_scores() -> void:
-	top_players_container.show_top_scores()
+func _on_game_menu_container_top_scores(player_name: String) -> void:
+	top_players_container.show_top_scores(player_name)
 
 
 func _on_game_over_container_wave_started() -> void:
@@ -109,6 +125,8 @@ func _on_game_over_container_wave_started() -> void:
 
 
 func _on_game_menu() -> void:
+	base_background.modulate.a = 1
+	base_background.visible = true
 	game_menu_container.visible = true
 
 

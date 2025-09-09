@@ -29,6 +29,8 @@ func set_textures() -> void:
 
 func set_button_state( state: String ) -> void:
 	if is_on:
-		add_theme_stylebox_override(state,style_box_on)
+		if style_box_on:
+			add_theme_stylebox_override(state,style_box_on)
 	else:
-		add_theme_stylebox_override(state,style_box_off)
+		if style_box_off:
+			add_theme_stylebox_override(state,style_box_off)

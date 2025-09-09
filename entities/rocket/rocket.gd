@@ -62,6 +62,7 @@ func process_collision(collision: KinematicCollision2D) -> void:
 			# when bouncing, this looks cool but doesnt play well, feels off
 			# and not break-out like, so for now to improve playability going
 			# back to doing a regular bounce
+			# @see also enable extra exit boundary in world.gd
 			velocity = target_velocity
 			return
 			

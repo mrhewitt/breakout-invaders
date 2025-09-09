@@ -32,5 +32,5 @@ func _on_body_entered(body: Node2D) -> void:
 
 # entered an area - can only be death zone, so we didnt hit anything
 # bombs only damage paddle itself so just remove it
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(_area: Area2D) -> void:
 	queue_free()

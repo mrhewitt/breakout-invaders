@@ -1,9 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnlardbhocwgc"]
+[gd_scene load_steps=3 format=3 uid="uid://d0fgrn8c0mio8"]
 
-[ext_resource type="Script" uid="uid://cfruglno0qk3t" path="res://world/test.gd" id="1_norx2"]
 [ext_resource type="PackedScene" uid="uid://gm21bw4cc6i6" path="res://world/invader_grid.tscn" id="2_norx2"]
 
+[sub_resource type="GDScript" id="GDScript_2b4yi"]
+script/source = "extends Node2D
+
+@onready var invader_grid: InvaderGrid = $InvaderGrid
+
+func _ready() -> void:
+	invader_grid.create_invaders() 
+	await get_tree().create_timer(2).timeout
+	GameManager.game_over.emit()
+"
+
 [node name="Test" type="Node2D"]
-script = ExtResource("1_norx2")
+script = SubResource("GDScript_2b4yi")
 
 [node name="InvaderGrid" parent="." instance=ExtResource("2_norx2")]

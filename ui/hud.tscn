@@ -19,6 +19,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 172.0
 grow_horizontal = 2
+mouse_filter = 0
 theme_type_variation = &"Wrapper"
 theme_override_constants/margin_top = 32
 script = ExtResource("1_1v5rv")

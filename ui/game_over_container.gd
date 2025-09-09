@@ -2,7 +2,7 @@ extends MarginContainer
 
 signal wave_started
 signal game_menu
-signal high_scores
+signal high_scores(player_name: String)
 
 const PICKUP_SPRITE_FRAMES = preload("res://resource/pickup_sprite_frames.tres")
 const COIN_PICKUP = preload("res://entities/pickups/coin_pickup.tscn")
@@ -213,7 +213,7 @@ func _on_menu_button_pressed() -> void:
 
 func _on_high_score_button_pressed() -> void:
 	visible = false
-	high_scores.emit()
+	high_scores.emit(name_text_edit.text)
 
 
 func _on_save_score_button_pressed() -> void:

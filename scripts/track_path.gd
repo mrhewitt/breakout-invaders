@@ -46,7 +46,7 @@ func exit_path() -> void:
 	# work out how fast we were moving to complete the path
 	# use vector of last potion of path to determine a velocity on exiting
 	# the path, 
-	var last_point: int = curve.point_count-1
+	#var last_point: int = curve.point_count-1
 	#var path_velocity = to_global(curve.get_point_position(last_point)) - to_global(curve.get_point_position(last_point-1))
 	#var path_velocity = target.global_position - to_global(curve.get_closest_point(target.global_position))
 	var path_velocity = to_global( curve.sample_baked(path_follow.progress) )   - to_global( curve.sample_baked(path_follow.progress-10) )  

@@ -57,6 +57,19 @@ var coins_left_in_wave: int = 0
 # main container for all invders,rockets,bombs, etc
 var invader_grid: InvaderGrid = null
 
+# extra margin added at top to move entire game down on mobile
+# devies, whilst safe margin is needed this is really a hack as
+# I only added direct mobile support at end, and found I needed to shirt entire
+# layout down to compensate for mobile resolutions, so to keep game fair 
+# (same size playing field) components added at start (invader grid/paddle) and 
+# death/bouncce areas alll shift down by safe margin, so game field remains same
+# with a larger gap at top
+var safe_margin: float = 0
+
+
+func is_on_mobile() -> bool:
+	return OS.get_name() in ["Android", "iOS"]
+
 
 func new_game() -> void:
 #	invader_grid.clear()
@@ -98,8 +111,8 @@ func load_high_scores() -> void:
 		print("An error occurred in the HTTP request.")		
 
 
-func save_high_score( name: String, score: int ) -> void:
-	high_score_list.append( {name=name, score=score} )
+func save_high_score( player_name: String, _score: int ) -> void:
+	high_score_list.append( {name=player_name, score=_score} )
 	high_score_list.sort_custom( sort_high_scores )
 	
 	var http_request = HTTPRequest.new()

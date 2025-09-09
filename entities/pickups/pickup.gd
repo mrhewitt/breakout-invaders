@@ -24,7 +24,7 @@ func _physics_process(delta: float) -> void:
 
 # overridable method for inherited scenes to implement to handle action needed when 
 # player gets the pickup
-func collect_pickup(body: CharacterBody2D) -> void:
+func collect_pickup(_body: CharacterBody2D) -> void:
 	pass
 
 
