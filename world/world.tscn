@@ -127,7 +127,6 @@ visible = false
 layout_mode = 1
 offset_top = -166.5
 offset_bottom = 166.5
-mouse_filter = 0
 
 [connection signal="pause_game" from="HUD" to="." method="_on_hud_pause_game"]
 [connection signal="area_entered" from="DeathZoneArea" to="." method="_on_death_zone_area_area_entered"]

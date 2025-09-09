@@ -1,13 +1,28 @@
-[gd_scene load_steps=17 format=3 uid="uid://c421k7ke8tl76"]
+[gd_scene load_steps=23 format=3 uid="uid://c421k7ke8tl76"]
 
 [ext_resource type="Texture2D" uid="uid://bcenfw7pbi3ks" path="res://assets/ui/buttons/SpaceInvaders_Icons.png" id="1_1myoo"]
 [ext_resource type="Script" uid="uid://do7dmlmawy746" path="res://ui/game_menu_container.gd" id="1_gremv"]
 [ext_resource type="Theme" uid="uid://cuya3oesxofh2" path="res://resource/game_theme.tres" id="1_xek0y"]
 [ext_resource type="PackedScene" uid="uid://dgjvwpw5aln1q" path="res://ui/buttons/play_button.tscn" id="2_gremv"]
+[ext_resource type="Texture2D" uid="uid://caa8kkcvc2w6l" path="res://assets/invaders/pickups.png" id="3_3tkts"]
+[ext_resource type="Texture2D" uid="uid://cigactwaocchl" path="res://assets/invaders/bomb-01.png" id="3_rqjll"]
+[ext_resource type="Script" uid="uid://3by3ivjo5fii" path="res://scripts/texture_rect_frames.gd" id="4_rqjll"]
 [ext_resource type="PackedScene" uid="uid://u17vyaob2nnc" path="res://ui/buttons/audio_bus_button.tscn" id="4_wte08"]
 [ext_resource type="PackedScene" uid="uid://vwphxl1gv8wq" path="res://ui/buttons/high_score_button.tscn" id="5_3d0ao"]
 [ext_resource type="StyleBox" uid="uid://42ypp5rrhahr" path="res://resource/music_on_button.tres" id="6_xn1ve"]
 [ext_resource type="StyleBox" uid="uid://bsyvpxotsgpof" path="res://resource/music_off_button.tres" id="7_3d0ao"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ofuam"]
+atlas = ExtResource("3_rqjll")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xne4c"]
+atlas = ExtResource("3_3tkts")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r71c1"]
+atlas = ExtResource("3_3tkts")
+region = Rect2(32, 96, 32, 32)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xek0y"]
 load_path = "res://.godot/imported/SpaceInvaders_Icons.png-da2aedf138362630804c6533a9c0f23f.ctex"
@@ -88,6 +103,43 @@ text = "Defeat waves of aliens with richoceting rockets!
 Unlimited shots, but make sure to keep them all in the air!"
 horizontal_alignment = 1
 autowrap_mode = 2
+
+[node name="PickupsHBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TextureRectFrames" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/PickupsHBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_ofuam")
+script = ExtResource("4_rqjll")
+metadata/_custom_type_script = "uid://3by3ivjo5fii"
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PickupsHBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "Bomb"
+
+[node name="TextureRectFrames3" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/PickupsHBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_xne4c")
+script = ExtResource("4_rqjll")
+metadata/_custom_type_script = "uid://3by3ivjo5fii"
+
+[node name="Coin" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PickupsHBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "Coin"
+
+[node name="TextureRectFrames2" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/PickupsHBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_r71c1")
+script = ExtResource("4_rqjll")
+frame = 7
+metadata/_custom_type_script = "uid://3by3ivjo5fii"
+
+[node name="Health" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PickupsHBoxContainer"]
+layout_mode = 2
+text = "Health"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

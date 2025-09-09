@@ -141,6 +141,16 @@ func set_high_score_list( _scores: Array ) -> void:
 	else:
 		high_score = 0
 		
+		
+func makes_highscore_list( _score: int ) -> bool:
+	if high_score_list.size() < 10:
+		return true
+	else:
+		for entry in high_score_list:
+			if _score > entry.score:
+				return true
+		return false
+	
 	
 func sort_high_scores(score_a, score_b) -> bool:
 	return score_b.score < score_a.score

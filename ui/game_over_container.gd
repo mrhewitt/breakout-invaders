@@ -24,11 +24,10 @@ const COIN_RECT_ALPHA: float = 0.4
 
 
 var coin_instance: AnimatedSprite2D
-var coins: int = 2
-var score: int = 1200
+var coins: int = 0
+var score: int = 0
 var last_score: int = 0
 var high_score: int = 0
-var new_top_score: bool = false
 var is_game_over: bool = false
 
 
@@ -46,7 +45,6 @@ func new_wave(wave: int) -> void:
 	
 func wave_complete() -> void:
 	is_game_over = false
-	new_top_score = false
 	set_ui_entry_state('WAVE CLEARED!')
 	accumulate_score()
 
@@ -66,7 +64,6 @@ func game_over() -> void:
 
 func set_ui_entry_state(label: String) -> void:
 	visible = true
-	new_top_score = false
 	title_label.text = label
 	play_button.visible = false
 	menu_button.visible = false
@@ -130,7 +127,7 @@ func coin_counting_complete() -> void:
 		
 		
 func start_high_score_entry() -> void:
-	if new_top_score:
+	if GameManager.makes_highscore_list(score):
 		SfxPlayer.play('highscore')
 		top_score_v_box_container.visible = true
 	else:
@@ -179,7 +176,6 @@ func add_to_score( points: int ) -> void:
 func show_score( points: int ) -> void:
 	if points > high_score:
 		high_score = points
-		new_top_score = true
 	score_label.text = str(points)
 	high_score_label.text = str(high_score)
 	
@@ -223,5 +219,7 @@ func _on_high_score_button_pressed() -> void:
 func _on_save_score_button_pressed() -> void:
 	name_input_h_box_container.visible = false
 	saving_label.visible = true
-	GameManager.save_high_score( name_text_edit.text, high_score )
+	# save addition to high score list, we use score NOT highscore as we may have
+	# made the list somewhere in top 10, but not neccesariy the top score
+	GameManager.save_high_score( name_text_edit.text, score )
 	

@@ -9,7 +9,7 @@ func _ready() -> void:
 	await GameManager.top_player_updated
 	GameManager.score = 900
 	GameManager.coins = 0
-	game_over_container.wave_complete()
+	game_over_container.game_over()
 
 
 func _on_game_over_container_high_scores() -> void:
