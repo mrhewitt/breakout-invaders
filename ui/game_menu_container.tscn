@@ -215,6 +215,7 @@ size_flags_vertical = 4
 audio_bus_name = "SFX"
 
 [node name="HighScoreButton" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("5_3d0ao")]
+visible = false
 layout_mode = 2
 
 [node name="PlayButton" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_gremv")]

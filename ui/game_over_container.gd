@@ -18,7 +18,7 @@ const COIN_RECT_ALPHA: float = 0.4
 @onready var play_button: ScreenButton = %PlayButton
 @onready var menu_button: ScreenButton = %MenuButton
 @onready var high_scores_button: ScreenButton = %HighScoresButton
-@onready var name_text_edit: TextEdit = %NameTextEdit
+@onready var name_text_edit: LineEdit = %NameTextEdit
 @onready var name_input_h_box_container: HBoxContainer = %NameInputHBoxContainer
 @onready var saving_label: Label = %SavingLabel
 
@@ -39,7 +39,7 @@ func _ready() -> void:
 	GameManager.wave_updated.connect( new_wave )
 	
 	
-func new_wave(wave: int) -> void:
+func new_wave(_wave: int) -> void:
 	is_game_over = false
 	
 	
@@ -130,6 +130,7 @@ func start_high_score_entry() -> void:
 	if GameManager.makes_highscore_list(score):
 		SfxPlayer.play('highscore')
 		name_text_edit.placeholder_text = HighScoreManager.get_random_player_name()
+		name_text_edit.grab_focus()
 		top_score_v_box_container.visible = true
 	else:
 		enable_ui_buttons()
@@ -196,10 +197,10 @@ func set_score( _score: int) -> void:
 func set_high_score( top_player: Dictionary ) -> void:
 	high_score = top_player.score
 	high_score_label.text = str(high_score)
-	if is_game_over:
-		name_input_h_box_container.visible = true
-		saving_label.visible = false
-		_on_high_score_button_pressed()
+	#if is_game_over:
+	#	name_input_h_box_container.visible = true
+	#	saving_label.visible = false
+	#	_on_high_score_button_pressed()
 
 
 func _on_play_button_pressed() -> void:
@@ -214,7 +215,7 @@ func _on_menu_button_pressed() -> void:
 
 func _on_high_score_button_pressed() -> void:
 	visible = false
-	high_scores.emit(name_text_edit.text)
+	high_scores.emit("")
 
 
 func _on_save_score_button_pressed() -> void:
@@ -222,7 +223,13 @@ func _on_save_score_button_pressed() -> void:
 	saving_label.visible = true
 	# save addition to high score list, we use score NOT highscore as we may have
 	# made the list somewhere in top 10, but not neccesariy the top score
-	if name_text_edit.text.strip_edges() == "":
-		name_text_edit.text = name_text_edit.placeholder_text 
-	GameManager.save_high_score( name_text_edit.text, score )
+	var player_name: String = name_text_edit.text.strip_edges()
+	if name == "":
+		name = name_text_edit.placeholder_text 
+	GameManager.save_high_score( player_name, score )
+	visible = false
+	high_scores.emit(player_name)
 	
+
+func _on_name_text_edit_text_submitted(_new_text: String) -> void:
+	_on_save_score_button_pressed()

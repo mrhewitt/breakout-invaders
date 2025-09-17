@@ -55,7 +55,7 @@ func hit_by_bomb( bomb_position: Vector2 ) -> void:
 	GameManager.health -= 1
 	
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("fire_action"):
 		launch_rocket()
 

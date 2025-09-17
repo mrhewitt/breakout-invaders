@@ -1,6 +1,9 @@
 extends CharacterBody2D
 class_name Rocket
 
+# 10 degrees in radians
+const _10_DEGS_IN_RADS = 0.17
+
 # length of time it takes to move along entire launch path
 const LAUNCH_PATH_TIME: float = 0.5
 
@@ -92,6 +95,27 @@ func process_collision(collision: KinematicCollision2D) -> void:
 			# and not break-out like, so for now to improve playability going
 			# back to doing a regular bounce
 			# @see also enable extra exit boundary in world.gd
+			
+			# check to see if we are bouncing at a very flat angle, close to 
+			# directly left or right, if so force a steeper angle to prevent
+			# rocket simply boucning side to side
+			var target_angle := target_velocity.angle()
+			var new_angle := 0.0
+			
+			# is it near horizontal to the left side now going right?
+			if target_angle >= 0 and target_angle <= _10_DEGS_IN_RADS:
+				new_angle = randf_range(0.4,0.7)	# new angle between 20-40 deg
+			elif target_angle < 0 and target_angle >= -_10_DEGS_IN_RADS:
+				new_angle = randf_range(-0.4,-0.7)	# new angle between +- 320-340 deg
+			# if on right edge and just bounced flat towards left
+			elif target_angle < PI and target_angle > PI - _10_DEGS_IN_RADS:
+				new_angle = randf_range(2.45,2.8)	# new angle between +- 140-160 deg
+			elif target_angle >= -PI and target_angle < -PI + _10_DEGS_IN_RADS:
+				new_angle = randf_range(-2.45,-2.8)	# new angle between +- 140-160 deg
+				
+			if new_angle != 0:
+				target_velocity = Vector2.from_angle(new_angle).normalized() * speed
+				
 			velocity = target_velocity
 			reset_combos()
 			return
@@ -112,7 +136,7 @@ func process_collision(collision: KinematicCollision2D) -> void:
 
 func add_kill_combo() -> void:
 	kill_combo += 1
-	print("Kill combo" , kill_combo)
+	#print("Kill combo" , kill_combo)
 	if kill_combo >= KILL_COMBO_TARGET:
 		GameManager.kill_combo_reached.emit(global_position, kill_combo)
 		kill_combo = 0
@@ -120,7 +144,7 @@ func add_kill_combo() -> void:
 
 func add_invader_combo() -> void:
 	invader_combo += 1
-	print("invader combo" , kill_combo)
+#	print("invader combo" , kill_combo)
 	if invader_combo >= INVADER_COMBO_TARGET:
 		GameManager.invader_combo_reached.emit(global_position, invader_combo)
 		invader_combo = 0

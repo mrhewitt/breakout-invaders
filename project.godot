@@ -13,7 +13,7 @@ config_version=5
 config/name="Breakout Invaders"
 config/version="0.9"
 run/main_scene="uid://gmlielrkjsvt"
-config/features=PackedStringArray("4.4", "Mobile")
+config/features=PackedStringArray("4.5", "Mobile")
 config/icon="uid://btfiou6ydllpv"
 config/windows_native_icon="res://GameIcon.ico"
 
@@ -38,6 +38,10 @@ window/size/window_height_override=960
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
 window/handheld/orientation=1
+
+[editor]
+
+movie_writer/movie_file="C:/GameDev/Projects/Ten-Game-Challenge/breakout-invaders/build/breakout-invaders-trailer.avi"
 
 [editor_plugins]
 

@@ -4,6 +4,7 @@ signal game_started
 signal top_scores(player_name: String)
 
 @onready var top_player_score: Label = %TopPlayerScore
+@onready var high_score_button: ScreenButton = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/HighScoreButton
 
 
 func _ready() -> void:
@@ -30,6 +31,7 @@ func _on_play_button_pressed() -> void:
 	
 	
 func show_top_player(top_player: Dictionary) -> void:
+	high_score_button.visible = true
 	top_player_score.text = top_player.name + ": " + str(top_player.score)
 
 

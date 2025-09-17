@@ -183,12 +183,12 @@ func _on_score_multiplier(score_multiplier: float) -> void:
 	score_bonus_label.visible = score_multiplier > 1
 	
 	
-func _on_invader_combo(event_position: Vector2, combo: int) -> void:
+func _on_invader_combo(event_position: Vector2, _combo: int) -> void:
 	combo_bonus_label.show_bonus("knock combo bonus")
 	show_points_label(event_position,250)
 	
 	
-func _on_kill_combo(event_position: Vector2, combo: int) -> void:
+func _on_kill_combo(event_position: Vector2, _combo: int) -> void:
 	combo_bonus_label.show_bonus("kill combo bonus")
 	show_points_label(event_position,500)
 

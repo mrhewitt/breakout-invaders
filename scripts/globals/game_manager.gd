@@ -137,14 +137,17 @@ func load_high_scores() -> void:
 func save_high_score( player_name: String, _score: int ) -> void:
 	high_score_list.append( {name=player_name, score=_score} )
 	high_score_list.sort_custom( sort_high_scores )
+	# ensure only 10 top scores are kept
+	high_score_list = high_score_list.slice(0,10)
+	set_top_player()
 	
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	http_request.request_completed.connect(self._http_request_completed)
+	#http_request.request_completed.connect(self._http_request_completed)
 
 	# Perform a GET request. The URL below returns JSON as of writing.
 	var api_key: String = "X-Master-key: " + get_api_key()
-	var error = http_request.request(			\
+	var _error = http_request.request(			\
 		"https://api.jsonbin.io/v3/b/68b974cfd0ea881f4071608d?meta=false",			\
 		[api_key, "X-Bin-Meta:false", "Content-Type: application/json"],			\
 		HTTPClient.Method.METHOD_PUT,
@@ -153,7 +156,7 @@ func save_high_score( player_name: String, _score: int ) -> void:
 
 
 # Called when the HTTP request is completed.
-func _http_request_completed(result, response_code, headers, body):
+func _http_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
 	
@@ -169,7 +172,10 @@ func set_high_score_list( _scores: Array ) -> void:
 	high_score_list = []
 	for _score in _scores:
 		high_score_list.append( {name=_score.name, score=int(_score.score)} )
+	set_top_player()
 		
+		
+func set_top_player() -> void:
 	# update high scores and top player info for UI and data updates	
 	if high_score_list.size():
 		high_score = high_score_list[0].score

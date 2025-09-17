@@ -17,7 +17,7 @@ func _ready() -> void:
 	
 	
 func play_explosion( idx : int ) -> void:
-	await get_tree().create_timer( randf_range(0,0.5) ) 
+	await get_tree().create_timer( randf_range(0,0.5) ).timeout 
 	SfxPlayer.play_random('explosion_death')
 	var sprite = AnimatedSprite2D.new()
 	sprite.sprite_frames = explosion_animation
