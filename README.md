@@ -10,6 +10,13 @@ See it in action on Itch.io:  [Breakout Invaders](https://daddio-dragonslayer.it
   <img height="320" src="https://img.itch.zone/aW1hZ2UvMzg3MDcwMy8yMzEwMDYxMS5wbmc=/original/rZwxJ1.png" />
 </p>
 
+This project included a persistent high score table using a JSON API on jsonbin.io. This means the project will not run (or score list wont work at least) 
+out the box as I could not commit my API secret, to use the project, create a folder in root called data and add a file api_key.txt. Put your jsonbin.io key
+in this file.
+
+You will also need to update the bin hash in the /scripts/globals/game_manager.gd:load/save_high_scores() (yes this needs to be fixed in next update to not be duplicated and a constant!!)
+
+A future update will also move high score management code to high_score_manager.gd which is really where it belongs.  
 
 ## What is the 20 game challenge?
 
